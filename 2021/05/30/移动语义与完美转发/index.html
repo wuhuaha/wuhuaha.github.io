@@ -13,7 +13,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title> 厚积薄发</title>
+      <title>移动语义与完美转发 |  厚积薄发</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/favicon.ico" />
@@ -45,18 +45,32 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-移动语义（move semantic）和完美转发（perfect forward）"
+  id="post-移动语义与完美转发"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
   data-scroll-reveal
 >
   <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  移动语义与完美转发
+</h1>
+ 
+
+      
+    </header>
      
     <div class="article-meta">
-      <a href="/2021/05/30/%E7%A7%BB%E5%8A%A8%E8%AF%AD%E4%B9%89%EF%BC%88move%20semantic%EF%BC%89%E5%92%8C%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91%EF%BC%88perfect%20forward%EF%BC%89/" class="article-date">
-  <time datetime="2021-05-30T12:57:42.342Z" itemprop="datePublished">2021-05-30</time>
-</a>   
+      <a href="/2021/05/30/%E7%A7%BB%E5%8A%A8%E8%AF%AD%E4%B9%89%E4%B8%8E%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/" class="article-date">
+  <time datetime="2021-05-30T14:41:59.000Z" itemprop="datePublished">2021-05-30</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/c/">c++</a>
+  </div>
+  
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
@@ -86,8 +100,7 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h1 id="移动语义（move-semantic）和完美转发（perfect-forward）"><a href="#移动语义（move-semantic）和完美转发（perfect-forward）" class="headerlink" title="移动语义（move semantic）和完美转发（perfect forward）"></a>移动语义（move semantic）和完美转发（perfect forward）</h1><h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>03 Jun 2014 | <a target="_blank" rel="noopener" href="https://codinfox.github.io/blog/tags/#c">C++</a></p>
-<p>新标准重新定义了lvalue和rvalue，并允许函数依照这两种不同的类型进行重载。通过对于右值（rvalue）的重新定义，语言实现了移动语义（move semantic）和完美转发（perfect forwarding），通过这种方法，C++实现了在保留原有的语法并不改动已存在的代码的基础上提升代码性能的目的。作为一个C++0x标准的初学者，理解这些概念其实还有有一定的困难的，加上网上能够找得到的中文资源有比较的少，少有的资源写的也都不是那么的通俗易懂，多少有点晦涩，这也为学习设置了一定的障碍。同样作为初学者，我就花了不少时间研究这些概念，终于算是有所体悟。这里就把我粗浅的理解记录于此，希望能够给后来接触这些内容的同侪们以帮助，也供我日后参考。谬误之处在所难免，还望不吝赐教。</p>
+  <p>新标准重新定义了lvalue和rvalue，并允许函数依照这两种不同的类型进行重载。通过对于右值（rvalue）的重新定义，语言实现了移动语义（move semantic）和完美转发（perfect forwarding），通过这种方法，C++实现了在保留原有的语法并不改动已存在的代码的基础上提升代码性能的目的。作为一个C++0x标准的初学者，理解这些概念其实还有有一定的困难的，加上网上能够找得到的中文资源有比较的少，少有的资源写的也都不是那么的通俗易懂，多少有点晦涩，这也为学习设置了一定的障碍。同样作为初学者，我就花了不少时间研究这些概念，终于算是有所体悟。这里就把我粗浅的理解记录于此，希望能够给后来接触这些内容的同侪们以帮助，也供我日后参考。谬误之处在所难免，还望不吝赐教。</p>
 <h2 id="移动语义解决了什么问题"><a href="#移动语义解决了什么问题" class="headerlink" title="移动语义解决了什么问题"></a>移动语义解决了什么问题</h2><p>我们先看一段代码。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class Test &#123;</span><br><span class="line">    int * arr&#123;nullptr&#125;;</span><br><span class="line">public:</span><br><span class="line">    Test():arr(new int[5000]&#123;1,2,3,4&#125;) &#123; </span><br><span class="line">    	cout &lt;&lt; &quot;default constructor&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    Test(const Test &amp; t) &#123;</span><br><span class="line">        cout &lt;&lt; &quot;copy constructor&quot; &lt;&lt; endl;</span><br><span class="line">        if (arr == nullptr) arr = new int[5000];</span><br><span class="line">        memcpy(arr, t.arr, 5000*sizeof(int));</span><br><span class="line">    &#125;</span><br><span class="line">    ~Test()&#123;</span><br><span class="line">        cout &lt;&lt; &quot;destructor&quot; &lt;&lt; endl;</span><br><span class="line">        delete [] arr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
@@ -285,30 +298,23 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2021/05/30/%E7%A7%BB%E5%8A%A8%E8%AF%AD%E4%B9%89%EF%BC%88move%20semantic%EF%BC%89%E5%92%8C%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91%EF%BC%88perfect%20forward%EF%BC%89/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2021/05/30/%E7%A7%BB%E5%8A%A8%E8%AF%AD%E4%B9%89%E4%B8%8E%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/" alt="微信分享二维码">
     </div>
 </div>
 
 <div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c++</a></li></ul>
+
     </footer>
   </div>
 
    
   <nav class="article-nav">
     
-      <a href="/2021/05/30/%E7%A7%BB%E5%8A%A8%E8%AF%AD%E4%B9%89%E4%B8%8E%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            移动语义与完美转发
-          
-        </div>
-      </a>
     
-    
-      <a href="/2021/05/29/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80%E6%95%B4%E7%90%86/" class="article-nav-link">
+      <a href="/2021/05/30/%E7%A7%BB%E5%8A%A8%E8%AF%AD%E4%B9%89%EF%BC%88move%20semantic%EF%BC%89%E5%92%8C%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91%EF%BC%88perfect%20forward%EF%BC%89/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">数据库基础整理</div>
+        <div class="article-nav-title"></div>
       </a>
     
   </nav>
