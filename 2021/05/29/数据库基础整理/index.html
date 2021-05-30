@@ -1,146 +1,234 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>数据库基础整理 | 厚积薄发</title><meta name="keywords" content="数据库"><meta name="author" content="王涛"><meta name="copyright" content="王涛"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="数据库和SQL SQL语句及其种类  DDL（Data Definition Language，数据定义语言） 用来创建或者删除存储数据用的数据库以及数据库中的表等对象。DDL 包含以下几种指令： CREATE： 创建数据库和表等对象 DROP： 删除数据库和表等对象 ALTER： 修改数据库和表等对象的结构   DML（Data Manipulation Language，数据操纵语言） 用来查">
-<meta property="og:type" content="article">
-<meta property="og:title" content="数据库基础整理">
-<meta property="og:url" content="http://example.com/2021/05/29/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80%E6%95%B4%E7%90%86/index.html">
-<meta property="og:site_name" content="厚积薄发">
-<meta property="og:description" content="数据库和SQL SQL语句及其种类  DDL（Data Definition Language，数据定义语言） 用来创建或者删除存储数据用的数据库以及数据库中的表等对象。DDL 包含以下几种指令： CREATE： 创建数据库和表等对象 DROP： 删除数据库和表等对象 ALTER： 修改数据库和表等对象的结构   DML（Data Manipulation Language，数据操纵语言） 用来查">
-<meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
-<meta property="article:published_time" content="2021-05-29T03:10:58.000Z">
-<meta property="article:modified_time" content="2021-05-29T16:28:22.291Z">
-<meta property="article:author" content="王涛">
-<meta property="article:tag" content="数据库">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2021/05/29/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80%E6%95%B4%E7%90%86/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
-  root: '/',
-  algolia: undefined,
-  localSearch: undefined,
-  translate: undefined,
-  noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
-  copy: {
-    success: '复制成功',
-    error: '复制错误',
-    noSupport: '浏览器不支持'
-  },
-  relativeDate: {
-    homepage: false,
-    post: false
-  },
-  runtime: '',
-  date_suffix: {
-    just: '刚刚',
-    min: '分钟前',
-    hour: '小时前',
-    day: '天前',
-    month: '个月前'
-  },
-  copyright: undefined,
-  lightbox: 'fancybox',
-  Snackbar: undefined,
-  source: {
-    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
-    justifiedGallery: {
-      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
-      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
-    },
-    fancybox: {
-      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
-      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
-    }
-  },
-  isPhotoFigcaption: false,
-  islazyload: false,
-  isanchor: false
-}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  title: '数据库基础整理',
-  isPost: true,
-  isHome: false,
-  isHighlightShrink: false,
-  isToc: true,
-  postUpdate: '2021-05-30 00:28:22'
-}</script><noscript><style type="text/css">
-  #nav {
-    opacity: 1
-  }
-  .justified-gallery img {
-    opacity: 1
-  }
 
-  #recent-posts time,
-  #post-meta time {
-    display: inline !important
-  }
-</style></noscript><script>(win=>{
-    win.saveToLocal = {
-      set: function setWithExpiry(key, value, ttl) {
-        if (ttl === 0) return
-        const now = new Date()
-        const expiryDay = ttl * 86400000
-        const item = {
-          value: value,
-          expiry: now.getTime() + expiryDay,
-        }
-        localStorage.setItem(key, JSON.stringify(item))
-      },
 
-      get: function getWithExpiry(key) {
-        const itemStr = localStorage.getItem(key)
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
 
-        if (!itemStr) {
-          return undefined
-        }
-        const item = JSON.parse(itemStr)
-        const now = new Date()
 
-        if (now.getTime() > item.expiry) {
-          localStorage.removeItem(key)
-          return undefined
-        }
-        return item.value
-      }
-    }
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-    win.getScript = url => new Promise((resolve, reject) => {
-      const script = document.createElement('script')
-      script.src = url
-      script.async = true
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    })
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="做个有趣的工程师，去创造本就该有的美好">
+  <meta name="author" content="王涛">
+  <meta name="keywords" content="">
   
-      win.activateDarkMode = function () {
-        document.documentElement.setAttribute('data-theme', 'dark')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-        }
-      }
-      win.activateLightMode = function () {
-        document.documentElement.setAttribute('data-theme', 'light')
-        if (document.querySelector('meta[name="theme-color"]') !== null) {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-        }
-      }
-      const t = saveToLocal.get('theme')
+  <title>数据库基础整理 - 厚积薄发</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
     
-          if (t === 'dark') activateDarkMode()
-          else if (t === 'light') activateLightMode()
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
-      const asideStatus = saveToLocal.get('aside-status')
-      if (asideStatus !== undefined) {
-        if (asideStatus === 'hide') {
-          document.documentElement.classList.add('hide-aside')
-        } else {
-          document.documentElement.classList.remove('hide-aside')
-        }
-      }
-    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">1</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">厚积薄发</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">数据库基础整理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-05-29T03:10:58.000Z" title="发表于 2021-05-29 11:10:58">2021-05-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-05-29T16:28:22.291Z" title="更新于 2021-05-30 00:28:22">2021-05-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="数据库基础整理"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="数据库和SQL"><a href="#数据库和SQL" class="headerlink" title="数据库和SQL"></a>数据库和SQL</h2><ol>
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="数据库基础整理">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-05-29 11:10" pubdate>
+        2021年5月29日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.6k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      82
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">数据库基础整理</h1>
+            
+            <div class="markdown-body">
+              <h2 id="数据库和SQL"><a href="#数据库和SQL" class="headerlink" title="数据库和SQL"></a>数据库和SQL</h2><ol>
 <li><p>SQL语句及其种类</p>
 <ul>
 <li>DDL（Data Definition Language，数据定义语言） 用来创建或者删除存储数据用的数据库以及数据库中的表等对象。DDL 包含以下几种指令：<ul>
@@ -311,69 +399,69 @@
 <p>SELECT &lt;列名1&gt;, &lt;列名2&gt;, &lt;列名3&gt;, ……<br> FROM &lt;表名&gt;<br> GROUP BY &lt;列名1&gt;, &lt;列名2&gt;, &lt;列名3&gt;, ……;  </p>
 </blockquote>
 <p> 示例：按照商品种类统计数据行数</p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_type, COUNT(*)</span><br><span class="line">FROM Product</span><br><span class="line">GROUP BY product_type;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs elm"><span class="hljs-type">SELECT</span> product_<span class="hljs-keyword">type</span>, <span class="hljs-type">COUNT</span>(*)<br><span class="hljs-type">FROM</span> <span class="hljs-type">Product</span><br><span class="hljs-type">GROUP</span> <span class="hljs-type">BY</span> product_<span class="hljs-keyword">type</span>;<br></code></pre></td></tr></table></figure>
 <p> 执行结果：</p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"> product_type | count</span><br><span class="line"> --------------+------</span><br><span class="line"> 衣服 | 2</span><br><span class="line"> 办公用品 | 2</span><br><span class="line"> 厨房用具 | 4</span><br><span class="line"> ```   </span><br><span class="line">GROUP BY 和WHERE 并用时SELECT 语句的执行顺序 FROM → WHERE → GROUP BY → SELECT  </span><br><span class="line">GROUP BY 使用注意事项： </span><br><span class="line"> * 使用聚合函数时，SELECT 子句中只能存在以下三种元素：● 常数● 聚合函数● GROUP BY子句中指定的列名（也就是聚合键）。</span><br><span class="line">     &gt; 实际例子：select count(\*), student_name from school group by gender 显然无法工作，count(\*)和student_name数量不一致。</span><br><span class="line"> </span><br><span class="line"> * 在GROUP BY 子句中不能使用列的别名</span><br><span class="line">     错误示例：</span><br><span class="line">     &gt; SELECT product_type AS pt, COUNT(*) FROM Product GROUP BY pt;  </span><br><span class="line">     </span><br><span class="line">     上述语句发生错误的原因之前已经介绍过了，是SQL 语句在DBMS</span><br><span class="line">     内部的执行顺序造成的——SELECT 子句在GROUP BY 子句之后执行。</span><br><span class="line">     在执行GROUP BY 子句时，SELECT 子句中定义的别名，DBMS 还并</span><br><span class="line">     不知道。  </span><br><span class="line"> * 只有SELECT 子句和HAVING 子句（以及之后将要学到的ORDER BY 子句）中能够使用COUNT 等聚合函数,WHERE 子句中不能使用聚合函数。</span><br><span class="line">     例如： </span><br></pre></td></tr></table></figure>
+ <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"> product_type | count<br> <span class="hljs-comment">--------------+------</span><br> 衣服 | <span class="hljs-number">2</span><br> 办公用品 | <span class="hljs-number">2</span><br> 厨房用具 | <span class="hljs-number">4</span><br> ```   <br><span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> 和<span class="hljs-keyword">WHERE</span> 并用时<span class="hljs-keyword">SELECT</span> 语句的执行顺序 <span class="hljs-keyword">FROM</span> → <span class="hljs-keyword">WHERE</span> → <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> → <span class="hljs-keyword">SELECT</span>  <br><span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> 使用注意事项： <br> * 使用聚合函数时，<span class="hljs-keyword">SELECT</span> 子句中只能存在以下三种元素：● 常数● 聚合函数● <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span>子句中指定的列名（也就是聚合键）。<br>     &gt; 实际例子：<span class="hljs-keyword">select</span> count(\*), student_name <span class="hljs-keyword">from</span> school <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> gender 显然无法工作，count(\*)和student_name数量不一致。<br> <br> * 在<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> 子句中不能使用列的别名<br>     错误示例：<br>     &gt; <span class="hljs-keyword">SELECT</span> product_type <span class="hljs-keyword">AS</span> pt, COUNT(*) <span class="hljs-keyword">FROM</span> Product <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> pt;  <br>     <br>     上述语句发生错误的原因之前已经介绍过了，是<span class="hljs-keyword">SQL</span> 语句在DBMS<br>     内部的执行顺序造成的——<span class="hljs-keyword">SELECT</span> 子句在<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> 子句之后执行。<br>     在执行<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> 子句时，<span class="hljs-keyword">SELECT</span> 子句中定义的别名，DBMS 还并<br>     不知道。  <br> * 只有<span class="hljs-keyword">SELECT</span> 子句和<span class="hljs-keyword">HAVING</span> 子句（以及之后将要学到的<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> 子句）中能够使用COUNT 等聚合函数,<span class="hljs-keyword">WHERE</span> 子句中不能使用聚合函数。<br>     例如： <br></code></pre></td></tr></table></figure>
 <pre><code> SELECT product_type, COUNT(*)  FROM Product WHERE COUNT(*) = 2 GROUP BY product_type;
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">    </span><br><span class="line">会报错:</span><br></pre></td></tr></table></figure>
+ <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs makefile">    <br><span class="hljs-section">会报错:</span><br></code></pre></td></tr></table></figure>
  ERROR: 不能在WHERE子句中使用聚合 行 3: WHERE COUNT(*) = 2
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">3. 为聚合结果指定条件（HAVING）--通过指定条件选取特定组的方法</span><br><span class="line">    * HAVING子句语法如下：</span><br></pre></td></tr></table></figure>
+ <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-number">3.</span> 为聚合结果指定条件（<span class="hljs-keyword">HAVING</span>）<span class="hljs-comment">--通过指定条件选取特定组的方法</span><br>    * <span class="hljs-keyword">HAVING</span>子句语法如下：<br></code></pre></td></tr></table></figure>
  SELECT &lt;列名1&gt;, &lt;列名2&gt;, &lt;列名3&gt;, ……
  FROM &lt;表名&gt;
  GROUP BY &lt;列名1&gt;, &lt;列名2&gt;, &lt;列名3&gt;, ……
  HAVING &lt;分组结果对应的条件&gt;
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HAVING 子句必须写在GROUP BY 子句之后，其在DBMS 内部的执行顺序也排在GROUP BY 子句之后。</span><br><span class="line">使用HAVING 子句时SELECT 语句的顺序</span><br><span class="line">&gt; SELECT → FROM → WHERE → GROUP BY → HAVING  </span><br><span class="line"></span><br><span class="line">示例：</span><br></pre></td></tr></table></figure>
+ <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">HAVING</span> 子句必须写在<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> 子句之后，其在DBMS 内部的执行顺序也排在<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> 子句之后。<br>使用<span class="hljs-keyword">HAVING</span> 子句时<span class="hljs-keyword">SELECT</span> 语句的顺序<br>&gt; <span class="hljs-keyword">SELECT</span> → <span class="hljs-keyword">FROM</span> → <span class="hljs-keyword">WHERE</span> → <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> → <span class="hljs-keyword">HAVING</span>  <br><br>示例：<br></code></pre></td></tr></table></figure>
  SELECT product_type, COUNT(*) FROM Product GROUP BY product_type HAVING COUNT(*) = 2;
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">执行结果</span><br></pre></td></tr></table></figure>
+ <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">执行结果<br></code></pre></td></tr></table></figure>
  product_type | count
  --------------+------
  衣服 | 2
  办公用品 | 2
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">    * HAVING 子句中能够使用的3 种要素如下所示。</span><br><span class="line">        * 常数</span><br><span class="line">        * 聚合函数</span><br><span class="line">        * GROUP BY子句中指定的列名（即聚合键）--此处既能用WHERE也能用GROUP BY，最好用WHERE</span><br><span class="line">4. 对查询结果进行排序（ORDER BY）</span><br><span class="line">    * ORDER BY 语法</span><br></pre></td></tr></table></figure>
+ <figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">    * HAVING 子句中能够使用的<span class="hljs-number">3</span> 种要素如下所示。<br>        * 常数<br>        * 聚合函数<br>        * <span class="hljs-keyword">GROUP</span> <span class="hljs-title">BY</span>子句中指定的列名（即聚合键）--此处既能用WHERE也能用<span class="hljs-keyword">GROUP</span> <span class="hljs-title">BY</span>，最好用WHERE<br><span class="hljs-number">4</span>. 对查询结果进行排序（<span class="hljs-keyword">ORDER</span> <span class="hljs-title">BY</span>）<br>    * <span class="hljs-keyword">ORDER</span> <span class="hljs-title">BY</span> 语法<br></code></pre></td></tr></table></figure>
  SELECT &lt;列名1&gt;, &lt;列名2&gt;, &lt;列名3&gt;, ……
  FROM &lt;表名&gt;
  ORDER BY &lt;排序基准列1&gt;, &lt;排序基准列2&gt;, ……
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">    子句的书写顺序:</span><br><span class="line">    &gt;  1.SELECT 子句 → 2. FROM 子句 → 3. WHERE 子句 → 4. GROUP BY 子句 → 5. HAVING 子句 → 6. ORDER BY 子句  </span><br><span class="line">    </span><br><span class="line">    降序排列时，在列名后面使用DESC 关键字。</span><br><span class="line">* 使用含有NULL 的列作为排序键时，NULL 会在结果的开头或末尾汇总显示。</span><br><span class="line">* 在ORDER BY 子句中却是允许使用别名。</span><br><span class="line">* ORDER BY 子句中也可以使用存在于表中、但并不包含在SELECT子句之中的列。例如</span><br></pre></td></tr></table></figure>
+ <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">    子句的书写顺序:<br>    &gt;  <span class="hljs-number">1.</span><span class="hljs-keyword">SELECT</span> 子句 → <span class="hljs-number">2.</span> <span class="hljs-keyword">FROM</span> 子句 → <span class="hljs-number">3.</span> <span class="hljs-keyword">WHERE</span> 子句 → <span class="hljs-number">4.</span> <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> 子句 → <span class="hljs-number">5.</span> <span class="hljs-keyword">HAVING</span> 子句 → <span class="hljs-number">6.</span> <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> 子句  <br>    <br>    降序排列时，在列名后面使用<span class="hljs-keyword">DESC</span> 关键字。<br>* 使用含有<span class="hljs-keyword">NULL</span> 的列作为排序键时，<span class="hljs-keyword">NULL</span> 会在结果的开头或末尾汇总显示。<br>* 在<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> 子句中却是允许使用别名。<br>* <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> 子句中也可以使用存在于表中、但并不包含在<span class="hljs-keyword">SELECT</span>子句之中的列。例如<br></code></pre></td></tr></table></figure>
  SELECT product_name, sale_price, purchase_price
      FROM Product
  ORDER BY product_id;
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* ORDER BY 可以使用聚合函数。例如：</span><br></pre></td></tr></table></figure>
+ <figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">* <span class="hljs-keyword">ORDER</span> <span class="hljs-title">BY</span> 可以使用聚合函数。例如：<br></code></pre></td></tr></table></figure>
  SELECT product_type, COUNT(*)
  FROM Product
  GROUP BY product_type
  ORDER BY COUNT(*);
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">## 数据更新</span><br><span class="line">1. 数据的插入</span><br><span class="line">    * INSERT 语法</span><br><span class="line">        &gt; INSERT INTO &lt;表名&gt; (列1, 列2, 列3, ……) VALUES (值1, 值2, 值3, ……);   </span><br><span class="line"></span><br><span class="line">        INSERT 语句中想给某一列赋予NULL 值时，可以直接在VALUES 子句的值清单中写入NULL。</span><br><span class="line">    * 插入默认值</span><br><span class="line">        * 向表中插入默认值（初始值）  </span><br><span class="line">            可以通过在创建表的 CREATE TABLE 语句中设置DEFAULT 约束来设定默认值</span><br></pre></td></tr></table></figure>
+ <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs sql">## 数据更新<br><span class="hljs-number">1.</span> 数据的插入<br>    <span class="hljs-operator">*</span> <span class="hljs-keyword">INSERT</span> 语法<br>        <span class="hljs-operator">&gt;</span> <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-operator">&lt;</span>表名<span class="hljs-operator">&gt;</span> (列<span class="hljs-number">1</span>, 列<span class="hljs-number">2</span>, 列<span class="hljs-number">3</span>, ……) <span class="hljs-keyword">VALUES</span> (值<span class="hljs-number">1</span>, 值<span class="hljs-number">2</span>, 值<span class="hljs-number">3</span>, ……);   <br><br>        <span class="hljs-keyword">INSERT</span> 语句中想给某一列赋予<span class="hljs-keyword">NULL</span> 值时，可以直接在<span class="hljs-keyword">VALUES</span> 子句的值清单中写入<span class="hljs-keyword">NULL</span>。<br>    <span class="hljs-operator">*</span> 插入默认值<br>        <span class="hljs-operator">*</span> 向表中插入默认值（初始值）  <br>            可以通过在创建表的 <span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> 语句中设置<span class="hljs-keyword">DEFAULT</span> 约束来设定默认值<br></code></pre></td></tr></table></figure>
      CREATE TABLE ProductIns
      (product_id CHAR(4) NOT NULL,
      sale_price INTEGER DEFAULT 0, -- 销售单价的默认值设定为0;
      PRIMARY KEY (product_id));
-     <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* 通过显式方法插入默认值</span><br><span class="line">    在VALUES 子句中指定DEFAULT 关键字。</span><br></pre></td></tr></table></figure>
+     <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">* 通过显式方法插入默认值<br>    在<span class="hljs-keyword">VALUES</span> 子句中指定<span class="hljs-keyword">DEFAULT</span> 关键字。<br></code></pre></td></tr></table></figure>
      INSERT INTO ProductIns (product_id, product_name, product_type, 
      sale_price, purchase_price, regist_date) VALUES (&#39;0007&#39;, 
      &#39;擦菜板&#39;, &#39;厨房用具&#39;, DEFAULT, 790, &#39;2009-04-28&#39;);
-     <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    这样一来，RDBMS 就会在插入记录时自动把默认值赋给对应的列。</span><br><span class="line">    我们可以使用SELECT 语句来确认通过INSERT 语句插入的数据行。</span><br><span class="line">* 通过隐式方法插入默认值</span><br><span class="line">    插入默认值时也可以不使用DEFAULT 关键字，只要在列清单和VALUES 中省略设定了默认值的列就可以了。</span><br></pre></td></tr></table></figure>
+     <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">    这样一来，RDBMS 就会在插入记录时自动把默认值赋给对应的列。<br>    我们可以使用<span class="hljs-keyword">SELECT</span> 语句来确认通过<span class="hljs-keyword">INSERT</span> 语句插入的数据行。<br>* 通过隐式方法插入默认值<br>    插入默认值时也可以不使用<span class="hljs-keyword">DEFAULT</span> 关键字，只要在列清单和<span class="hljs-keyword">VALUES</span> 中省略设定了默认值的列就可以了。<br></code></pre></td></tr></table></figure>
      INSERT INTO ProductIns (product_id, product_name, product_type, 
      purchase_price, regist_date) VALUES (&#39;0007&#39;,
      &#39;擦菜板&#39;, &#39;厨房用具&#39;, 790, &#39;2009-04-28&#39;);
-     <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* 从其他表中复制数据</span><br><span class="line">    示例：</span><br></pre></td></tr></table></figure>
+     <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-bullet">* </span>从其他表中复制数据<br><span class="hljs-code">    示例：</span><br></code></pre></td></tr></table></figure>
  -- 将商品表中的数据复制到商品复制表中
  INSERT INTO ProductCopy (product_id, product_name, product_type, 
  sale_price, purchase_price, regist_date)
  SELECT product_id, product_name, product_type, sale_price, 
  purchase_price, regist_date
  FROM Product;
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">        该INSERT 语句中的SELECT 语句，也可以使用WHERE 子句或者 GROUP BY 子句等。目前为止学到的各种SELECT 语句也都可以使用</span><br><span class="line">2. 数据的删除</span><br><span class="line">    * 删除数据的方法大概有以下两种：</span><br><span class="line">        1.  DROP TABLE 语句可以将表完全删除。</span><br><span class="line">        2. DELETE 语句会留下表（容器），而删除表中的全部数据。</span><br><span class="line">    * DELETE基本语法</span><br><span class="line">        &gt; DELETE FROM &lt;表名&gt; WHERE &lt;条件&gt;;</span><br><span class="line">    </span><br><span class="line">3. 数据的更新</span><br><span class="line">    * UPDATE基本语法： </span><br><span class="line">        &gt; UPDATE &lt;表名&gt; SET &lt;列名&gt; = &lt;表达式&gt;;   </span><br><span class="line">        &gt; UPDATE &lt;表名&gt; SET &lt;列名&gt; = &lt;表达式&gt; WHERE &lt;条件&gt;;  </span><br><span class="line"></span><br><span class="line">    * 使用UPDATE 也可以将列更新为NULL（该更新俗称为NULL 清空）。此时只需要将赋值表达式右边的值直接写为NULL 即可.</span><br><span class="line">4. 事务</span><br><span class="line">    * 在RDBMS 中，事务是对表中数据进行更新的单位。简单来讲，事务就是 需要在同一个处理单元中执行的一系列更新处理的集合。</span><br><span class="line">    * 语法：</span><br></pre></td></tr></table></figure>
+ <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">        该<span class="hljs-keyword">INSERT</span> 语句中的<span class="hljs-keyword">SELECT</span> 语句，也可以使用<span class="hljs-keyword">WHERE</span> 子句或者 <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> 子句等。目前为止学到的各种<span class="hljs-keyword">SELECT</span> 语句也都可以使用<br><span class="hljs-number">2.</span> 数据的删除<br>    * 删除数据的方法大概有以下两种：<br>        <span class="hljs-number">1.</span>  <span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> 语句可以将表完全删除。<br>        <span class="hljs-number">2.</span> <span class="hljs-keyword">DELETE</span> 语句会留下表（容器），而删除表中的全部数据。<br>    * <span class="hljs-keyword">DELETE</span>基本语法<br>        &gt; <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> &lt;表名&gt; <span class="hljs-keyword">WHERE</span> &lt;条件&gt;;<br>    <br><span class="hljs-number">3.</span> 数据的更新<br>    * <span class="hljs-keyword">UPDATE</span>基本语法： <br>        &gt; <span class="hljs-keyword">UPDATE</span> &lt;表名&gt; <span class="hljs-keyword">SET</span> &lt;列名&gt; = &lt;表达式&gt;;   <br>        &gt; <span class="hljs-keyword">UPDATE</span> &lt;表名&gt; <span class="hljs-keyword">SET</span> &lt;列名&gt; = &lt;表达式&gt; <span class="hljs-keyword">WHERE</span> &lt;条件&gt;;  <br><br>    * 使用<span class="hljs-keyword">UPDATE</span> 也可以将列更新为<span class="hljs-keyword">NULL</span>（该更新俗称为<span class="hljs-keyword">NULL</span> 清空）。此时只需要将赋值表达式右边的值直接写为<span class="hljs-keyword">NULL</span> 即可.<br><span class="hljs-number">4.</span> 事务<br>    * 在RDBMS 中，事务是对表中数据进行更新的单位。简单来讲，事务就是 需要在同一个处理单元中执行的一系列更新处理的集合。<br>    * 语法：<br></code></pre></td></tr></table></figure>
  事务开始语句;
  DML语句①;
  DML语句②;
  DML语句③;
  .. .
  事务结束语句（COMMIT或者ROLLBACK）;
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">        * SQL Server、PostgreSQL</span><br><span class="line">            &gt; BEGIN TRANSACTION  </span><br><span class="line">            </span><br><span class="line">        * MySQL</span><br><span class="line">            &gt; START TRANSACTION  </span><br><span class="line">            </span><br><span class="line">        * Oracle、DB2</span><br><span class="line">            &gt; 无  </span><br><span class="line">            </span><br><span class="line">    * COMMMIT——提交处理&lt;/br&gt;</span><br><span class="line">        COMMIT 是提交事务包含的全部更新处理的结束指令，相当于文件处理中的覆盖保存。一旦提交，就无法恢复到事务开始前的状态了</span><br><span class="line">    * ROLLBACK——取消处理&lt;/br&gt;</span><br><span class="line">        ROLLBACK 是取消事务包含的全部更新处理的结束指令，相当于文件处理中的放弃保存。一旦回滚，数据库就会恢复到事务开始之前的状态。</span><br><span class="line">    * 事务的特性</span><br><span class="line">        DBMS 的事务都遵循四种特性，将这四种特性的首字母结合起来统称为ACID 特性。</span><br><span class="line">        * 原子性（Atomicity）</span><br><span class="line">            原子性是指在事务结束时，其中所包含的更新处理要么全部执行，要么完全不执行，也就是要么占有一切要么一无所有。</span><br><span class="line">        * 一致性（Consistency）</span><br><span class="line">            一致性指的是事务中包含的处理要满足数据库提前设置的约束，如主键约束或者NOT NULL 约束等。</span><br><span class="line">        * 隔离性（Isolation）</span><br><span class="line">            隔离性指的是保证不同事务之间互不干扰的特性。</span><br><span class="line">        * 持久性（Durability）</span><br><span class="line">            持久性也可以称为耐久性，指的是在事务（不论是提交还是回滚）结束后，DBMS 能够保证该时间点的数据状态会被保存的特性。</span><br><span class="line">## 复杂查询</span><br><span class="line">1. 视图  </span><br><span class="line">    **视图中的数据会随着原表的变化自动更新**</span><br><span class="line">    * 视图的优点：</span><br><span class="line">        * 由于视图无需保存数据，因此可以节省存储设备的容量；</span><br><span class="line">        * 可以将频繁使用的SELECT 语句保存成视图，这样不用每次都重新书写了。</span><br><span class="line">    * 视图的语法：</span><br></pre></td></tr></table></figure>
+ <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-comment">        * SQL Server、PostgreSQL</span><br>            &gt; BEGIN TRANSACTION  <br>            <br><span class="hljs-comment">        * MySQL</span><br>            &gt; START TRANSACTION  <br>            <br><span class="hljs-comment">        * Oracle、DB2</span><br>            &gt; 无  <br>            <br><span class="hljs-comment">    * COMMMIT——提交处理&lt;/br&gt;</span><br>        COMMIT 是提交事务包含的全部更新处理的结束指令，相当于文件处理中的覆盖保存。一旦提交，就无法恢复到事务开始前的状态了<br><span class="hljs-comment">    * ROLLBACK——取消处理&lt;/br&gt;</span><br>        ROLLBACK 是取消事务包含的全部更新处理的结束指令，相当于文件处理中的放弃保存。一旦回滚，数据库就会恢复到事务开始之前的状态。<br><span class="hljs-comment">    * 事务的特性</span><br>        DBMS 的事务都遵循四种特性，将这四种特性的首字母结合起来统称为ACID 特性。<br><span class="hljs-comment">        * 原子性（Atomicity）</span><br>            原子性是指在事务结束时，其中所包含的更新处理要么全部执行，要么完全不执行，也就是要么占有一切要么一无所有。<br><span class="hljs-comment">        * 一致性（Consistency）</span><br>            一致性指的是事务中包含的处理要满足数据库提前设置的约束，如主键约束或者NOT NULL 约束等。<br><span class="hljs-comment">        * 隔离性（Isolation）</span><br>            隔离性指的是保证不同事务之间互不干扰的特性。<br><span class="hljs-comment">        * 持久性（Durability）</span><br>            持久性也可以称为耐久性，指的是在事务（不论是提交还是回滚）结束后，DBMS 能够保证该时间点的数据状态会被保存的特性。<br>## 复杂查询<br>1. 视图  <br><span class="hljs-comment">    **视图中的数据会随着原表的变化自动更新**</span><br><span class="hljs-comment">    * 视图的优点：</span><br><span class="hljs-comment">        * 由于视图无需保存数据，因此可以节省存储设备的容量；</span><br><span class="hljs-comment">        * 可以将频繁使用的SELECT 语句保存成视图，这样不用每次都重新书写了。</span><br><span class="hljs-comment">    * 视图的语法：</span><br></code></pre></td></tr></table></figure>
  CREATE VIEW 视图名称(&lt;视图列名1&gt;, &lt;视图列名2&gt;, ……)
  AS
  &lt;SELECT语句&gt;
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* 视图就是保存好的SELECT 语句。定义视图时可以使用任何SELECT 语句，既可以使用WHERE、GROUP BY、HAVING，也可以通过SELECT * 来指定全部列。但是,不能使用ORDER BY 子句。</span><br><span class="line">    如下示例中，使用ORDER BY子句定义出现错误</span><br></pre></td></tr></table></figure>
+ <figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs n1ql">* 视图就是保存好的<span class="hljs-keyword">SELECT</span> 语句。定义视图时可以使用任何<span class="hljs-keyword">SELECT</span> 语句，既可以使用<span class="hljs-keyword">WHERE</span>、<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span>、<span class="hljs-keyword">HAVING</span>，也可以通过<span class="hljs-keyword">SELECT</span> * 来指定全部列。但是,不能使用<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> 子句。<br>    如下示例中，使用<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span>子句定义出现错误<br></code></pre></td></tr></table></figure>
  -- 不能像这样定义视图
  CREATE VIEW ProductSum (product_type, cnt_product)
  AS
@@ -381,52 +469,52 @@
  FROM Product
  GROUP BY product_type
  ORDER BY product_type;        以视图为基础创建视图定义视图时不能使用ORDER BY子句
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">* 视图的限制</span><br><span class="line">    * 定义视图时不能使用ORDER BY子句 ，见上文；</span><br><span class="line">    * 更新视图的限制</span><br><span class="line">        视图的更新在符合某些情况下可已进行（更新会同步到原表）</span><br><span class="line">        一些比较具有代表性的条件：</span><br><span class="line">        * SELECT 子句中未使用DISTINCT</span><br><span class="line">        * FROM 子句中只有一张表</span><br><span class="line">        * 未使用GROUP BY 子句</span><br><span class="line">        * 未使用HAVING 子句</span><br><span class="line">* 删除视图(DROP VIEW)</span><br><span class="line">    删除视图的语法</span><br></pre></td></tr></table></figure>
+ <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">* 视图的限制<br>    * 定义视图时不能使用<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span>子句 ，见上文；<br>    * 更新视图的限制<br>        视图的更新在符合某些情况下可已进行（更新会同步到原表）<br>        一些比较具有代表性的条件：<br>        * <span class="hljs-keyword">SELECT</span> 子句中未使用<span class="hljs-keyword">DISTINCT</span><br>        * <span class="hljs-keyword">FROM</span> 子句中只有一张表<br>        * 未使用<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> 子句<br>        * 未使用<span class="hljs-keyword">HAVING</span> 子句<br>* 删除视图(<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">VIEW</span>)<br>    删除视图的语法<br></code></pre></td></tr></table></figure>
  DROP VIEW 视图名称(&lt;视图列名1&gt;, &lt;视图列名2&gt;, ……)
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2. 子查询   </span><br><span class="line">    * 子查询就是一次性视图（SELECT语句）。与视图不同，子查询在SELECT语句执行完毕之后就会消失。&lt;/br&gt;</span><br><span class="line">        使用示例:</span><br></pre></td></tr></table></figure>
+ <figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ada"><span class="hljs-number">2</span>. 子查询   <br>    * 子查询就是一次性视图（<span class="hljs-keyword">SELECT</span>语句）。与视图不同，子查询在<span class="hljs-keyword">SELECT</span>语句执行完毕之后就会消失。&lt;/br&gt;<br>        使用示例:<br></code></pre></td></tr></table></figure>
  SELECT product_type, cnt_product
  FROM (
  SELECT Product_type, COUNT(*) AS cnt_product
  FROM Product
  GROUP BY product_type
  ) AS ProductSum;
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">* 由于子查询需要命名，因此需要根据处理内容来指定恰当的名称。  </span><br><span class="line">    为子查询设定名称时需要使用AS关键字，该关键字有时也可以省略。其中也有像Oracle这样，在名称之前使用AS关键字就会发生错误的数据库。</span><br><span class="line">* 标量子查询(限制：只能返回一行一列的结果，eg:10、&#x27;可以的&#x27;)</span><br><span class="line">    * 由于返回的是单一的值，因此标量子查询的返回值可以用在= 或者&lt;&gt; 这样需要单一值的比较运算符之中。</span><br><span class="line">    * 场景示例1：</span><br><span class="line">        由于在WHERE子句中不能使用聚合函数，以下SQL语句是错误的：</span><br></pre></td></tr></table></figure>
+ <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-comment">* 由于子查询需要命名，因此需要根据处理内容来指定恰当的名称。  </span><br>    为子查询设定名称时需要使用<span class="hljs-keyword">AS</span>关键字，该关键字有时也可以省略。其中也有像Oracle这样，在名称之前使用<span class="hljs-keyword">AS</span>关键字就会发生错误的数据库。<br><span class="hljs-comment">* 标量子查询(限制：只能返回一行一列的结果，eg:10、&#x27;可以的&#x27;)</span><br><span class="hljs-comment">    * 由于返回的是单一的值，因此标量子查询的返回值可以用在= 或者&lt;&gt; 这样需要单一值的比较运算符之中。</span><br><span class="hljs-comment">    * 场景示例1：</span><br>        由于在WHERE子句中不能使用聚合函数，以下SQL语句是错误的：<br></code></pre></td></tr></table></figure>
      SELECT product_id, product＿name, sale_price
      FROM Product
      WHERE sale_price &gt; AVG(sale_price);
-     <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用标量子查询，实现方法如下：</span><br></pre></td></tr></table></figure>
+     <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">使用标量子查询，实现方法如下：<br></code></pre></td></tr></table></figure>
      SELECT product_id, product_name, sale_price
      FROM Product
      WHERE sale_price &gt; (SELECT AVG(sale_price)
      FROM Product);
-     <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* 场景示例2：</span><br><span class="line">    在SELECT子句中使用标量子查询</span><br></pre></td></tr></table></figure>
+     <figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ada">* 场景示例<span class="hljs-number">2</span>：<br>    在<span class="hljs-keyword">SELECT</span>子句中使用标量子查询<br></code></pre></td></tr></table></figure>
      SELECT product_id,
      product_name,
      sale_price,
      (SELECT AVG(sale_price)
      FROM Product) AS avg_price
      FROM Product;
-     <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* 场景示例3：</span><br><span class="line">    在HAVING子句中使用标量子查询</span><br></pre></td></tr></table></figure>
+     <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-bullet">* </span>场景示例3：<br><span class="hljs-code">    在HAVING子句中使用标量子查询</span><br></code></pre></td></tr></table></figure>
      SELECT product_type, AVG(sale_price)
      FROM Product
      GROUP BY product_type
      HAVING AVG(sale_price) &gt; (SELECT AVG(sale_price)
      FROM Product);
-     <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">        * 标量子查询的书写位置,不仅在WHERE 子句中，任何可以使用单一值的位置都可以使用。能够使用常数或者列名的地方，包括SELECT 子句、GROUP BY 子句、HAVING 子句、ORDER BY 子句，都可以使用。</span><br><span class="line">3. 关联子查询</span><br><span class="line">    * 关联子查询会在细分的组内进行比较时使用。</span><br><span class="line">        * 使用示例1：</span><br><span class="line">            由于子查询的返回值不是单个标量，因此以下写法错误</span><br></pre></td></tr></table></figure>
+     <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">        * 标量子查询的书写位置,不仅在<span class="hljs-keyword">WHERE</span> 子句中，任何可以使用单一值的位置都可以使用。能够使用常数或者列名的地方，包括<span class="hljs-keyword">SELECT</span> 子句、<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> 子句、<span class="hljs-keyword">HAVING</span> 子句、<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> 子句，都可以使用。<br><span class="hljs-number">3.</span> 关联子查询<br>    * 关联子查询会在细分的组内进行比较时使用。<br>        * 使用示例<span class="hljs-number">1</span>：<br>            由于子查询的返回值不是单个标量，因此以下写法错误<br></code></pre></td></tr></table></figure>
      -- 发生错误的子查询
      SELECT product_id, product_name, sale_price
      FROM Product
      WHERE sale_price &gt; (SELECT AVG(sale_price)
      FROM Product
      GROUP BY product_type);
-     <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用关联子查询方法如下：</span><br></pre></td></tr></table></figure>
+     <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">使用关联子查询方法如下：<br></code></pre></td></tr></table></figure>
      SELECT product_type, product_name, sale_price
          FROM Product AS P1 
      WHERE sale_price &gt; (SELECT AVG(sale_price)
          FROM Product AS P2 
          WHERE P1.product_type = P2.product_type
          GROUP BY product_type);
-     <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* 关联子查询的结合条件一定要在子查询之中。</span><br><span class="line">    * 原因：子查询内部设定的关联名称，只能在该子查询内部使用（“内部可以看到外部，而外部看不到内部”）。</span><br><span class="line">    * 举例说明：</span><br></pre></td></tr></table></figure>
+     <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="hljs-bullet">*</span> 关联子查询的结合条件一定要在子查询之中。<br><span class="hljs-bullet">    *</span> 原因：子查询内部设定的关联名称，只能在该子查询内部使用（“内部可以看到外部，而外部看不到内部”）。<br><span class="hljs-bullet">    *</span> 举例说明：<br></code></pre></td></tr></table></figure>
  -- 错误的关联子查询书写方法
  SELECT product_type, product_name, sale_price
  FROM Product AS P1
@@ -434,36 +522,36 @@
  AND sale_price &gt; (SELECT AVG(sale_price)
  FROM Product AS P2
  GROUP BY product_type);
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">        此处，子查询执行结束时只会留下执行结果，作为抽出源的P2 表其实已经不存在了。因此，在执行外层查询时，由于P2表已经不存在了，因此就会返回“不存在使用该名称的表”这样的错误</span><br><span class="line">## 函数、谓词、CASE表达式 </span><br><span class="line">1. 函数</span><br><span class="line">    * 函数分类</span><br><span class="line">        * 算术函数（用来进行数值计算的函数）</span><br><span class="line">        * 字符串函数（用来进行字符串操作的函数）</span><br><span class="line">        * 日期函数（用来进行日期操作的函数）</span><br><span class="line">        * 转换函数（用来转换数据类型和值的函数）</span><br><span class="line">        * 聚合函数（用来进行数据聚合的函数）</span><br><span class="line">    * 算术函数</span><br><span class="line">        函数 |  功能</span><br><span class="line">        ---------------------- | -------</span><br><span class="line">        ABS(数值)             |            绝对值</span><br><span class="line">        MOD(被除数，除数)      |           求余</span><br><span class="line">        ROUND(对象数值，保留小数的位数) |  四舍五入</span><br><span class="line">    * 字符串函数</span><br><span class="line">        功能 | 函数</span><br><span class="line">        ------------ | ---------------------------</span><br><span class="line">        字符串拼接 | 一般：字符串1\|\|字符串2&lt;/br&gt; MYSQL: CONCAT(str1, str2, str3)</span><br><span class="line">        字符串长度 | LENGTH(字符串)</span><br><span class="line">        字符串小写转换 | LOWER(字符串)</span><br><span class="line">        字符串大写转换 | UPPER(字符串)</span><br><span class="line">        字符串替换 | REPLACE(对象字符串，替换前的字符串，替换后的字符串)</span><br><span class="line">        字符串截取 | SUBSTRING（对象字符串 FROM 截取的起始位置 FOR 截取的字符数）</span><br><span class="line">    * 日期函数</span><br><span class="line">        功能 | 函数 | 示例</span><br><span class="line">        ------------- | ----------------------- | ------------------</span><br><span class="line">        当前日期（SQL执行的日期） | CURRENT_DATE | SELECT CURRENT_DATE;&lt;/br&gt;返回:2020-02-21</span><br><span class="line">        当前时间 | CURRENT_TIME  | SELECT CURRENT_TIME;&lt;/br&gt;返回：17:26:50.995+09</span><br><span class="line">        当前日期和时间 | CURRENT_TIMESTAMP | SELECT CURRENT_TIMESTAMP; &lt;/br&gt;返回：2016-04-25 18:31:03.704+09</span><br><span class="line">        截取日期元素 | EXTRACT(日期元素 FROM 日期）&lt;/br&gt;日期元素包括：year、month、day、hour、minute、second | SELECT EXTRACT(YEAR FROM CURRENT_TIMESTAMP) AS year；&lt;/br&gt;返回： 2020</span><br><span class="line">        </span><br><span class="line">    * 类型转换函数</span><br><span class="line">        功能 | 函数 | 说明/示例</span><br><span class="line">        --------- | ----------------------------- | -------</span><br><span class="line">        类型转换 | CAST（转换前的值 AS 想要转换的数据类型） | 将字符串类型转换成日期：&lt;/br&gt;SELECT CAST(&#x27;2020-2-21&#x27; AS DATE) AS date_col;&lt;/br&gt;返回：2020-2-21</span><br><span class="line">        将NULL转换为其他值 | COALESCE(数据1，数据2，数据3……) | 返回可变参数中左侧开始第1 个不是NULL 的值。参数个数是可变的，因此可以根据需要无限增加。</span><br><span class="line">        </span><br><span class="line">2. 谓词</span><br><span class="line">    * 谓词就是返回值为真值的函数: LIKE； BETWEEN； IS NULL、IS NOT NULL； IN；EXISTS</span><br><span class="line">    * LIKE —— 字符串的部分一致性   </span><br><span class="line">        % 是代表“0 字符以上的任意字符串”的特殊符号,例如：%abc、abc%、%abc%</span><br><span class="line">    * BETWEEN —— 范围查询</span><br><span class="line">        使用示例：</span><br></pre></td></tr></table></figure>
+ <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs sql">        此处，子查询执行结束时只会留下执行结果，作为抽出源的P2 表其实已经不存在了。因此，在执行外层查询时，由于P2表已经不存在了，因此就会返回“不存在使用该名称的表”这样的错误<br>## 函数、谓词、<span class="hljs-keyword">CASE</span>表达式 <br><span class="hljs-number">1.</span> 函数<br>    <span class="hljs-operator">*</span> 函数分类<br>        <span class="hljs-operator">*</span> 算术函数（用来进行数值计算的函数）<br>        <span class="hljs-operator">*</span> 字符串函数（用来进行字符串操作的函数）<br>        <span class="hljs-operator">*</span> 日期函数（用来进行日期操作的函数）<br>        <span class="hljs-operator">*</span> 转换函数（用来转换数据类型和值的函数）<br>        <span class="hljs-operator">*</span> 聚合函数（用来进行数据聚合的函数）<br>    <span class="hljs-operator">*</span> 算术函数<br>        函数 <span class="hljs-operator">|</span>  功能<br>        <span class="hljs-comment">---------------------- | -------</span><br>        <span class="hljs-built_in">ABS</span>(数值)             <span class="hljs-operator">|</span>            绝对值<br>        <span class="hljs-built_in">MOD</span>(被除数，除数)      <span class="hljs-operator">|</span>           求余<br>        ROUND(对象数值，保留小数的位数) <span class="hljs-operator">|</span>  四舍五入<br>    <span class="hljs-operator">*</span> 字符串函数<br>        功能 <span class="hljs-operator">|</span> 函数<br>        <span class="hljs-comment">------------ | ---------------------------</span><br>        字符串拼接 <span class="hljs-operator">|</span> 一般：字符串<span class="hljs-number">1</span>\<span class="hljs-operator">|</span>\<span class="hljs-operator">|</span>字符串<span class="hljs-number">2</span><span class="hljs-operator">&lt;</span><span class="hljs-operator">/</span>br<span class="hljs-operator">&gt;</span> MYSQL: CONCAT(str1, str2, str3)<br>        字符串长度 <span class="hljs-operator">|</span> LENGTH(字符串)<br>        字符串小写转换 <span class="hljs-operator">|</span> <span class="hljs-built_in">LOWER</span>(字符串)<br>        字符串大写转换 <span class="hljs-operator">|</span> <span class="hljs-built_in">UPPER</span>(字符串)<br>        字符串替换 <span class="hljs-operator">|</span> REPLACE(对象字符串，替换前的字符串，替换后的字符串)<br>        字符串截取 <span class="hljs-operator">|</span> SUBSTRING（对象字符串 <span class="hljs-keyword">FROM</span> 截取的起始位置 <span class="hljs-keyword">FOR</span> 截取的字符数）<br>    <span class="hljs-operator">*</span> 日期函数<br>        功能 <span class="hljs-operator">|</span> 函数 <span class="hljs-operator">|</span> 示例<br>        <span class="hljs-comment">------------- | ----------------------- | ------------------</span><br>        当前日期（<span class="hljs-keyword">SQL</span>执行的日期） <span class="hljs-operator">|</span> <span class="hljs-built_in">CURRENT_DATE</span> <span class="hljs-operator">|</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">CURRENT_DATE</span>;<span class="hljs-operator">&lt;</span><span class="hljs-operator">/</span>br<span class="hljs-operator">&gt;</span>返回:<span class="hljs-number">2020</span><span class="hljs-number">-02</span><span class="hljs-number">-21</span><br>        当前时间 <span class="hljs-operator">|</span> <span class="hljs-built_in">CURRENT_TIME</span>  <span class="hljs-operator">|</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">CURRENT_TIME</span>;<span class="hljs-operator">&lt;</span><span class="hljs-operator">/</span>br<span class="hljs-operator">&gt;</span>返回：<span class="hljs-number">17</span>:<span class="hljs-number">26</span>:<span class="hljs-number">50.995</span><span class="hljs-operator">+</span><span class="hljs-number">09</span><br>        当前日期和时间 <span class="hljs-operator">|</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span> <span class="hljs-operator">|</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span>; <span class="hljs-operator">&lt;</span><span class="hljs-operator">/</span>br<span class="hljs-operator">&gt;</span>返回：<span class="hljs-number">2016</span><span class="hljs-number">-04</span><span class="hljs-number">-25</span> <span class="hljs-number">18</span>:<span class="hljs-number">31</span>:<span class="hljs-number">03.704</span><span class="hljs-operator">+</span><span class="hljs-number">09</span><br>        截取日期元素 <span class="hljs-operator">|</span> <span class="hljs-built_in">EXTRACT</span>(日期元素 <span class="hljs-keyword">FROM</span> 日期）<span class="hljs-operator">&lt;</span><span class="hljs-operator">/</span>br<span class="hljs-operator">&gt;</span>日期元素包括：<span class="hljs-keyword">year</span>、<span class="hljs-keyword">month</span>、<span class="hljs-keyword">day</span>、<span class="hljs-keyword">hour</span>、<span class="hljs-keyword">minute</span>、<span class="hljs-keyword">second</span> <span class="hljs-operator">|</span> <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">EXTRACT</span>(<span class="hljs-keyword">YEAR</span> <span class="hljs-keyword">FROM</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span>) <span class="hljs-keyword">AS</span> <span class="hljs-keyword">year</span>；<span class="hljs-operator">&lt;</span><span class="hljs-operator">/</span>br<span class="hljs-operator">&gt;</span>返回： <span class="hljs-number">2020</span><br>        <br>    <span class="hljs-operator">*</span> 类型转换函数<br>        功能 <span class="hljs-operator">|</span> 函数 <span class="hljs-operator">|</span> 说明<span class="hljs-operator">/</span>示例<br>        <span class="hljs-comment">--------- | ----------------------------- | -------</span><br>        类型转换 <span class="hljs-operator">|</span> CAST（转换前的值 <span class="hljs-keyword">AS</span> 想要转换的数据类型） <span class="hljs-operator">|</span> 将字符串类型转换成日期：<span class="hljs-operator">&lt;</span><span class="hljs-operator">/</span>br<span class="hljs-operator">&gt;</span><span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">CAST</span>(<span class="hljs-string">&#x27;2020-2-21&#x27;</span> <span class="hljs-keyword">AS</span> <span class="hljs-type">DATE</span>) <span class="hljs-keyword">AS</span> date_col;<span class="hljs-operator">&lt;</span><span class="hljs-operator">/</span>br<span class="hljs-operator">&gt;</span>返回：<span class="hljs-number">2020</span><span class="hljs-number">-2</span><span class="hljs-number">-21</span><br>        将<span class="hljs-keyword">NULL</span>转换为其他值 <span class="hljs-operator">|</span> <span class="hljs-built_in">COALESCE</span>(数据<span class="hljs-number">1</span>，数据<span class="hljs-number">2</span>，数据<span class="hljs-number">3</span>……) <span class="hljs-operator">|</span> 返回可变参数中左侧开始第<span class="hljs-number">1</span> 个不是<span class="hljs-keyword">NULL</span> 的值。参数个数是可变的，因此可以根据需要无限增加。<br>        <br><span class="hljs-number">2.</span> 谓词<br>    <span class="hljs-operator">*</span> 谓词就是返回值为真值的函数: <span class="hljs-keyword">LIKE</span>； <span class="hljs-keyword">BETWEEN</span>； <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>、<span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>； <span class="hljs-keyword">IN</span>；<span class="hljs-keyword">EXISTS</span><br>    <span class="hljs-operator">*</span> <span class="hljs-keyword">LIKE</span> —— 字符串的部分一致性   <br>        <span class="hljs-operator">%</span> 是代表“<span class="hljs-number">0</span> 字符以上的任意字符串”的特殊符号,例如：<span class="hljs-operator">%</span>abc、abc<span class="hljs-operator">%</span>、<span class="hljs-operator">%</span>abc<span class="hljs-operator">%</span><br>    <span class="hljs-operator">*</span> <span class="hljs-keyword">BETWEEN</span> —— 范围查询<br>        使用示例：<br></code></pre></td></tr></table></figure>
  SELECT product_name, sale_price
  FROM Product
  WHERE sale_price BETWEEN 100 AND 1000;
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* IS NULL、IS NOT NULL —— 判断是否为NULL</span><br><span class="line">    使用示例：</span><br></pre></td></tr></table></figure>
+ <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">* <span class="hljs-keyword">IS</span> <span class="hljs-keyword">NULL</span>、<span class="hljs-keyword">IS</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> —— 判断是否为<span class="hljs-keyword">NULL</span><br>    使用示例：<br></code></pre></td></tr></table></figure>
  SELECT product_name, purchase_price
  FROM Product
  WHERE purchase_price IS NOT NULL;
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* IN、NOT IN —— OR有时的替代用法</span><br><span class="line">    使用示例：</span><br></pre></td></tr></table></figure>
+ <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-bullet">* </span>IN、NOT IN —— OR有时的替代用法<br><span class="hljs-code">    使用示例：</span><br></code></pre></td></tr></table></figure>
  SELECT product_name, purchase_price
  FROM Product
  WHERE purchase_price NOT IN (320, 500, 5000);
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">SELECT product_name, sale_price</span><br><span class="line">FROM Product</span><br><span class="line">WHERE product_id IN (SELECT product_id</span><br><span class="line">FROM ShopProduct</span><br><span class="line">WHERE shop_id = &#x27;000C&#x27;);</span><br></pre></td></tr></table></figure>
+ <figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs n1ql">```<br><span class="hljs-keyword">SELECT</span> product_name, sale_price<br><span class="hljs-keyword">FROM</span> Product<br><span class="hljs-keyword">WHERE</span> product_id <span class="hljs-keyword">IN</span> (<span class="hljs-keyword">SELECT</span> product_id<br><span class="hljs-keyword">FROM</span> ShopProduct<br><span class="hljs-keyword">WHERE</span> shop_id = <span class="hljs-string">&#x27;000C&#x27;</span>);<br></code></pre></td></tr></table></figure>
 </code></pre>
 <ul>
-<li>EXIST —— 判断是否存在满足某种条件的记录<br>  使用示例：  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_name, sale_price</span><br><span class="line">    FROM Product AS P </span><br><span class="line">WHERE EXISTS (SELECT *</span><br><span class="line">    FROM ShopProduct AS SP </span><br><span class="line">    WHERE SP.shop_id = &#x27;000C&#x27;</span><br><span class="line">    AND SP.product_id = P.product_id);</span><br></pre></td></tr></table></figure></li>
+<li>EXIST —— 判断是否存在满足某种条件的记录<br>  使用示例：  <figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">SELECT</span> product_name, sale_price<br>    <span class="hljs-keyword">FROM</span> Product <span class="hljs-keyword">AS</span> P <br><span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">EXISTS</span> (<span class="hljs-keyword">SELECT</span> *<br>    <span class="hljs-keyword">FROM</span> ShopProduct <span class="hljs-keyword">AS</span> SP <br>    <span class="hljs-keyword">WHERE</span> SP.shop_id = <span class="hljs-string">&#x27;000C&#x27;</span><br>    <span class="hljs-keyword">AND</span> SP.product_id = P.product_id);<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
 <li><p>CASE表达式</p>
 <ol>
 <li>搜索CASE表达式<ul>
-<li>搜索CASE表达式语法</br><br>CASE表达式会从对最初的WHEN子句中的“&lt; 求值表达式&gt;”进行求值开始执行如果结果<br>为真（TRUE），那么就返回THEN 子句中的表达式，CASE 表达式的执行到此为止。如果结果不为真，那么就跳转到下一条WHEN 子句的求值之中。如果直到最后的WHEN 子句为止返回结果都不为真，那么就会返回ELSE中的表达式，执行终止。  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CASE    WHEN &lt;求值表达式&gt; THEN &lt;表达式&gt;</span><br><span class="line">        WHEN &lt;求值表达式&gt; THEN &lt;表达式&gt;</span><br><span class="line">        WHEN &lt;求值表达式&gt; THEN &lt;表达式&gt;</span><br><span class="line">        .. .</span><br><span class="line">        ELSE &lt;表达式&gt;</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
-  使用示例：  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_name,</span><br><span class="line">CASE WHEN product_type = &#x27;衣服&#x27;</span><br><span class="line">THEN &#x27;A ：&#x27; | | product_type</span><br><span class="line">WHEN product_type = &#x27;办公用品&#x27;</span><br><span class="line">THEN &#x27;B ：&#x27; | | product_type</span><br><span class="line">WHEN product_type = &#x27;厨房用具&#x27;</span><br><span class="line">THEN &#x27;C ：&#x27; | | product_type</span><br><span class="line">ELSE NULL</span><br><span class="line">END AS abc_product_type</span><br><span class="line">FROM Product;</span><br></pre></td></tr></table></figure></li>
+<li>搜索CASE表达式语法</br><br>CASE表达式会从对最初的WHEN子句中的“&lt; 求值表达式&gt;”进行求值开始执行如果结果<br>为真（TRUE），那么就返回THEN 子句中的表达式，CASE 表达式的执行到此为止。如果结果不为真，那么就跳转到下一条WHEN 子句的求值之中。如果直到最后的WHEN 子句为止返回结果都不为真，那么就会返回ELSE中的表达式，执行终止。  <figure class="highlight bnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bnf">CASE    WHEN <span class="hljs-attribute">&lt;求值表达式&gt;</span> THEN <span class="hljs-attribute">&lt;表达式&gt;</span><br>        WHEN <span class="hljs-attribute">&lt;求值表达式&gt;</span> THEN <span class="hljs-attribute">&lt;表达式&gt;</span><br>        WHEN <span class="hljs-attribute">&lt;求值表达式&gt;</span> THEN <span class="hljs-attribute">&lt;表达式&gt;</span><br>        .. .<br>        ELSE <span class="hljs-attribute">&lt;表达式&gt;</span><br>END<br></code></pre></td></tr></table></figure>
+  使用示例：  <figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">SELECT</span> product_name,<br><span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> product_type = <span class="hljs-string">&#x27;衣服&#x27;</span><br><span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;A ：&#x27;</span> | | product_type<br><span class="hljs-keyword">WHEN</span> product_type = <span class="hljs-string">&#x27;办公用品&#x27;</span><br><span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;B ：&#x27;</span> | | product_type<br><span class="hljs-keyword">WHEN</span> product_type = <span class="hljs-string">&#x27;厨房用具&#x27;</span><br><span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;C ：&#x27;</span> | | product_type<br><span class="hljs-keyword">ELSE</span> <span class="hljs-literal">NULL</span><br><span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> abc_product_type<br><span class="hljs-keyword">FROM</span> Product;<br></code></pre></td></tr></table></figure></li>
 <li>ELSE 子句如果省略不写，会被默认为ELSE NULL。</li>
 <li>CASE 表达式最后的“END”不可省略。</li>
 </ul>
 </li>
 <li>简单CASE表达式</br><br> 简单CASE表达式比搜索CASE表达式简单，但是会受到条件的约束，因此通常情况下都会使用搜索CASE 表达式。<ul>
-<li>简单CASE表达式语法</br>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CASE &lt;表达式&gt;</span><br><span class="line">    WHEN &lt;表达式&gt; THEN &lt;表达式&gt;</span><br><span class="line">    WHEN &lt;表达式&gt; THEN &lt;表达式&gt;</span><br><span class="line">    WHEN &lt;表达式&gt; THEN &lt;表达式&gt;</span><br><span class="line">    .. .</span><br><span class="line">    ELSE &lt;表达式&gt;</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
-  示例：  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_name,</span><br><span class="line">CASE product_type</span><br><span class="line">    WHEN &#x27;衣服&#x27; THEN &#x27;A ：&#x27; | | product_type</span><br><span class="line">    WHEN &#x27;办公用品&#x27; THEN &#x27;B ：&#x27; | | product_type</span><br><span class="line">    WHEN &#x27;厨房用具&#x27; THEN &#x27;C ：&#x27; | | product_type</span><br><span class="line">    ELSE NULL</span><br><span class="line">    END AS abc_product_type</span><br><span class="line">FROM Product;</span><br></pre></td></tr></table></figure>
+<li>简单CASE表达式语法</br>  <figure class="highlight bnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bnf">CASE <span class="hljs-attribute">&lt;表达式&gt;</span><br>    WHEN <span class="hljs-attribute">&lt;表达式&gt;</span> THEN <span class="hljs-attribute">&lt;表达式&gt;</span><br>    WHEN <span class="hljs-attribute">&lt;表达式&gt;</span> THEN <span class="hljs-attribute">&lt;表达式&gt;</span><br>    WHEN <span class="hljs-attribute">&lt;表达式&gt;</span> THEN <span class="hljs-attribute">&lt;表达式&gt;</span><br>    .. .<br>    ELSE <span class="hljs-attribute">&lt;表达式&gt;</span><br>END<br></code></pre></td></tr></table></figure>
+  示例：  <figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">SELECT</span> product_name,<br><span class="hljs-keyword">CASE</span> product_type<br>    <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;衣服&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;A ：&#x27;</span> | | product_type<br>    <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;办公用品&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;B ：&#x27;</span> | | product_type<br>    <span class="hljs-keyword">WHEN</span> <span class="hljs-string">&#x27;厨房用具&#x27;</span> <span class="hljs-keyword">THEN</span> <span class="hljs-string">&#x27;C ：&#x27;</span> | | product_type<br>    <span class="hljs-keyword">ELSE</span> <span class="hljs-literal">NULL</span><br>    <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> abc_product_type<br><span class="hljs-keyword">FROM</span> Product;<br></code></pre></td></tr></table></figure>
 <h2 id="集合运算"><a href="#集合运算" class="headerlink" title="集合运算"></a>集合运算</h2>集合：指的是记录的集合。具体来说，表、视图和查询的执行结果都是记录的集合。<h3 id="交并差集运算"><a href="#交并差集运算" class="headerlink" title="交并差集运算"></a>交并差集运算</h3>注意事项：</li>
 </ul>
 </li>
@@ -473,20 +561,20 @@
 </li>
 <li><p>UNION ———— 并集</p>
 <ul>
-<li>基本语法示例  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_id, product_name</span><br><span class="line">FROM Product</span><br><span class="line">UNION</span><br><span class="line">SELECT product_id, product_name</span><br><span class="line">FROM Product2;</span><br></pre></td></tr></table></figure></li>
+<li>基本语法示例  <figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">SELECT</span> product_id, product_name<br><span class="hljs-keyword">FROM</span> Product<br><span class="hljs-keyword">UNION</span><br><span class="hljs-keyword">SELECT</span> product_id, product_name<br><span class="hljs-keyword">FROM</span> Product2;<br></code></pre></td></tr></table></figure></li>
 <li>保留重复行<br>  在UNION 后面添加ALL 关键字。</li>
 </ul>
 </li>
 <li><p>INTERSECT ———— 交集<br> 选取两个记录集合中公共部分</p>
 <ul>
-<li>基本语法示例  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Oracle SQL Server DB2 PostgreSQL</span><br><span class="line">SELECT product_id, product_name</span><br><span class="line">FROM Product</span><br><span class="line">INTERSECT</span><br><span class="line">SELECT product_id, product_name</span><br><span class="line">FROM Product2</span><br><span class="line">ORDER BY product_id;</span><br></pre></td></tr></table></figure></li>
+<li>基本语法示例  <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">Oracle <span class="hljs-keyword">SQL</span> <span class="hljs-keyword">Server</span> DB2 PostgreSQL<br><span class="hljs-keyword">SELECT</span> product_id, product_name<br><span class="hljs-keyword">FROM</span> Product<br><span class="hljs-keyword">INTERSECT</span><br><span class="hljs-keyword">SELECT</span> product_id, product_name<br><span class="hljs-keyword">FROM</span> Product2<br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> product_id;<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
 <li><p>EXCEPT ———— 差集 (ORACLE中关键词为MINUS)</p>
 <ul>
 <li>基本语法  <ul>
-<li>一般数据库示例：<br>  结果为Product 表中记录除去Product2表中记录之后的剩余部分。  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_id, product_name</span><br><span class="line">FROM Product</span><br><span class="line">EXCEPT</span><br><span class="line">SELECT product_id, product_name</span><br><span class="line">FROM Product2</span><br><span class="line">ORDER BY product_id;</span><br></pre></td></tr></table></figure></li>
-<li>oracle示例  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT …</span><br><span class="line">FROM …</span><br><span class="line">MINUS</span><br><span class="line">SELECT …</span><br><span class="line">FROM …;</span><br></pre></td></tr></table></figure>
+<li>一般数据库示例：<br>  结果为Product 表中记录除去Product2表中记录之后的剩余部分。  <figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">SELECT</span> product_id, product_name<br><span class="hljs-keyword">FROM</span> Product<br><span class="hljs-keyword">EXCEPT</span><br><span class="hljs-keyword">SELECT</span> product_id, product_name<br><span class="hljs-keyword">FROM</span> Product2<br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> product_id;<br></code></pre></td></tr></table></figure></li>
+<li>oracle示例  <figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">SELECT</span> …<br><span class="hljs-keyword">FROM</span> …<br><span class="hljs-keyword">MINUS</span><br><span class="hljs-keyword">SELECT</span> …<br><span class="hljs-keyword">FROM</span> …;<br></code></pre></td></tr></table></figure>
 <h3 id="联结"><a href="#联结" class="headerlink" title="联结"></a>联结</h3>联结（JOIN）就是将其他表中的列添加过来，进行“添加列”的集合运算。UNION是以行（纵向）为单位进行操作，而联结则是以列（横向）为单位进行的。所谓联结运算，一言以蔽之，就是“以A中的列作为桥梁，将B中满足同样条件的列汇集到同一结果之中”。</li>
 </ul>
 </li>
@@ -494,24 +582,24 @@
 </li>
 <li><p>INNER JOIN ———— 内联结</p>
 <ul>
-<li>基本语法示例1：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT SP.shop_id, SP.shop_name, SP.product_id, P.product_name, </span><br><span class="line">P.sale_price</span><br><span class="line">FROM ShopProduct AS SP INNER JOIN Product AS P </span><br><span class="line">ON SP.product_id = P.product_id</span><br><span class="line">WHERE SP.shop_id = &#x27;000A&#x27;;</span><br></pre></td></tr></table></figure></li>
+<li>基本语法示例1：<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">SELECT <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SP</span>.</span></span>shop_id, <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SP</span>.</span></span>shop_name, <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SP</span>.</span></span>product_id, <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">P</span>.</span></span>product_name, <br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">P</span>.</span></span>sale_price<br>FROM ShopProduct AS SP INNER JOIN Product AS P <br>ON <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SP</span>.</span></span>product_id = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">P</span>.</span></span>product_id<br>WHERE <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SP</span>.</span></span>shop_id = &#x27;<span class="hljs-number">000</span>A&#x27;;<br></code></pre></td></tr></table></figure></li>
 <li>FROM子句包含多张表，使用关键字INNER JOIN 将两表联结，别名SP 、P非必需。</li>
 <li>在ON 之后指定两张表联结所使用的列（联结键）（product_id）。ON 是专门用来指定联结条件的，它能起到与WHERE 相同的作用。需要指定多个键时，同样可<br>以使用AND、OR。<strong>在进行内联结时ON 子句是必不可少的</strong>（如果没有ON会发生错误），并且ON 必须书写在FROM 和WHERE 之间。</li>
 </ul>
 </li>
 <li><p>OUTER JOIN ———— 外联结<br> 用法与INNER JOIN相同，区别在于：内联结的结果只包含多张表都有的数据，外联结的结果包含主表的所有数据。（显然，外联结的结果数&gt;=内联结的结果数）</p>
 <ul>
-<li>外联结指定主表的关键字是LEFT 和RIGHT。，使用LEFT 时FROM子句中写在左侧的表是主表，使用RIGHT时右侧的表是主表。<br>  下面两个语句，结果相同：  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- 右侧的表，也就是Product 表是主表</span><br><span class="line">SELECT SP.shop_id, SP.shop_name, SP.product_id, P.product_name, </span><br><span class="line">P.sale_price</span><br><span class="line">FROM ShopProduct AS SP RIGHT OUTER JOIN Product AS P</span><br><span class="line">ON SP.product_id = P.product_id;</span><br></pre></td></tr></table></figure>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- 左侧的表，也就是Product表是主表</span><br><span class="line">SELECT SP.shop_id, SP.shop_name, SP.product_id, P.product_name, </span><br><span class="line">P.sale_price</span><br><span class="line">FROM Product AS P LEFT OUTER JOIN ShopProduct AS SP ①</span><br><span class="line">ON SP.product_id = P.product_id;</span><br></pre></td></tr></table></figure></li>
+<li>外联结指定主表的关键字是LEFT 和RIGHT。，使用LEFT 时FROM子句中写在左侧的表是主表，使用RIGHT时右侧的表是主表。<br>  下面两个语句，结果相同：  <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">-- 右侧的表，也就是Product 表是主表<br>SELECT <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SP</span>.</span></span>shop_id, <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SP</span>.</span></span>shop_name, <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SP</span>.</span></span>product_id, <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">P</span>.</span></span>product_name, <br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">P</span>.</span></span>sale_price<br>FROM ShopProduct AS SP RIGHT OUTER JOIN Product AS P<br>ON <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SP</span>.</span></span>product_id = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">P</span>.</span></span>product_id;<br></code></pre></td></tr></table></figure>
+  <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">-- 左侧的表，也就是Product表是主表<br>SELECT <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SP</span>.</span></span>shop_id, <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SP</span>.</span></span>shop_name, <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SP</span>.</span></span>product_id, <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">P</span>.</span></span>product_name, <br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">P</span>.</span></span>sale_price<br>FROM Product AS P LEFT OUTER JOIN ShopProduct AS SP ①<br>ON <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SP</span>.</span></span>product_id = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">P</span>.</span></span>product_id;<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
 <li><p>两表以上联结<br>示例代码：</p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT SP.shop_id, SP.shop_name, SP.product_id, P.product_name, </span><br><span class="line">P.sale_price</span><br><span class="line">FROM ShopProduct AS SP INNER JOIN Product AS P</span><br><span class="line">ON SP.product_id = P.product_id</span><br><span class="line">INNER JOIN InventoryProduct AS IP</span><br><span class="line">ON SP.product_id = IP.product_id</span><br></pre></td></tr></table></figure>
+ <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">SELECT <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SP</span>.</span></span>shop_id, <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SP</span>.</span></span>shop_name, <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SP</span>.</span></span>product_id, <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">P</span>.</span></span>product_name, <br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">P</span>.</span></span>sale_price<br>FROM ShopProduct AS SP INNER JOIN Product AS P<br>ON <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SP</span>.</span></span>product_id = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">P</span>.</span></span>product_id<br>INNER JOIN InventoryProduct AS IP<br>ON <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SP</span>.</span></span>product_id = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">IP</span>.</span></span>product_id<br></code></pre></td></tr></table></figure>
 <h2 id="窗口函数-OLAP-函数"><a href="#窗口函数-OLAP-函数" class="headerlink" title="窗口函数(OLAP 函数)"></a>窗口函数(OLAP 函数)</h2><p>OLAP 是OnLine Analytical Processing 的简称，意思是对数据库数据进行实时分析处理。</p>
 </li>
 </ol>
 <ul>
-<li>窗口函数基本语法  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;窗口函数&gt; OVER ([PARTITION BY &lt;列清单&gt;]</span><br><span class="line">ORDER BY &lt;排序用列清单&gt;)</span><br></pre></td></tr></table></figure></li>
+<li>窗口函数基本语法  <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">&lt;窗口函数&gt; <span class="hljs-keyword">OVER</span> ([<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> &lt;列清单&gt;]<br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> &lt;排序用列清单&gt;)<br></code></pre></td></tr></table></figure></li>
 <li>窗口函数包括：<ul>
 <li>所有的聚合函数都能用作窗口函数，其语法和专用窗口函数相同（SUM、AVG、COUNT、MAX、MIN）；</li>
 <li>RANK、DENSE_RANK、ROW_NUMBER 等专用窗口函数</li>
@@ -522,20 +610,215 @@
 <li>RUANK函数 ———— 记录排序  <ul>
 <li>PARTITION BY 设定排序的对象范围。</li>
 <li>ORDER BY 指定按照哪一列、何种顺序进行排序。</li>
-<li>使用示例：  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_name, product_type, sale_price,</span><br><span class="line">RANK () OVER (PARTITION BY product_type</span><br><span class="line">ORDER BY sale_price) AS ranking</span><br><span class="line">FROM Product;</span><br></pre></td></tr></table></figure>
-  执行结果：  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">product_name | product_type | sale_price | ranking</span><br><span class="line">------------+--------------+-------------+--------</span><br><span class="line">叉子 | 厨房用具 | 500 | 1</span><br><span class="line">擦菜板 | 厨房用具 | 880 | 2</span><br><span class="line">菜刀 | 厨房用具 | 3000 | 3</span><br><span class="line">高压锅 | 厨房用具 | 6800 | 4</span><br><span class="line">T恤衫 | 衣服 | 1000 | 1</span><br><span class="line">运动T恤 | 衣服 | 4000 | 2</span><br><span class="line">圆珠笔 | 办公用品 | 100 | 1</span><br><span class="line">打孔器 | 办公用品 | 500 | 2</span><br></pre></td></tr></table></figure></li>
+<li>使用示例：  <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">SELECT</span> product_name, product_type, sale_price,<br>RANK () <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">PARTITION</span> <span class="hljs-keyword">BY</span> product_type<br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> sale_price) <span class="hljs-keyword">AS</span> ranking<br><span class="hljs-keyword">FROM</span> Product;<br></code></pre></td></tr></table></figure>
+  执行结果：  <figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">product_name |<span class="hljs-string"> product_type </span>|<span class="hljs-string"> sale_price </span>|<span class="hljs-string"> ranking</span><br><span class="hljs-string">------------+--------------+-------------+--------</span><br><span class="hljs-string">叉子 </span>|<span class="hljs-string"> 厨房用具 </span>|<span class="hljs-string"> 500 </span>|<span class="hljs-string"> 1</span><br><span class="hljs-string">擦菜板 </span>|<span class="hljs-string"> 厨房用具 </span>|<span class="hljs-string"> 880 </span>|<span class="hljs-string"> 2</span><br><span class="hljs-string">菜刀 </span>|<span class="hljs-string"> 厨房用具 </span>|<span class="hljs-string"> 3000 </span>|<span class="hljs-string"> 3</span><br><span class="hljs-string">高压锅 </span>|<span class="hljs-string"> 厨房用具 </span>|<span class="hljs-string"> 6800 </span>|<span class="hljs-string"> 4</span><br><span class="hljs-string">T恤衫 </span>|<span class="hljs-string"> 衣服 </span>|<span class="hljs-string"> 1000 </span>|<span class="hljs-string"> 1</span><br><span class="hljs-string">运动T恤 </span>|<span class="hljs-string"> 衣服 </span>|<span class="hljs-string"> 4000 </span>|<span class="hljs-string"> 2</span><br><span class="hljs-string">圆珠笔 </span>|<span class="hljs-string"> 办公用品 </span>|<span class="hljs-string"> 100 </span>|<span class="hljs-string"> 1</span><br><span class="hljs-string">打孔器 </span>|<span class="hljs-string"> 办公用品 </span>|<span class="hljs-string"> 500 </span>|<span class="hljs-string"> 2</span><br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
 <li>SUM 函数作为窗口函数<ul>
-<li>使用示例  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_id, product_name, sale_price,</span><br><span class="line">　SUM (sale_price) OVER (ORDER BY product_id) AS current_sum</span><br><span class="line">FROM Product;</span><br></pre></td></tr></table></figure>
-  执行结果：  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">product_id | product_name | sale_price | current_sum</span><br><span class="line">----------+-----------+-------------+------------</span><br><span class="line">0001 | T恤衫 | 1000 | 1000 ←1000</span><br><span class="line">0002 | 打孔器 | 500 | 1500 ←1000+500</span><br><span class="line">0003 | 运动T恤 | 4000 | 5500 ←1000+500+4000</span><br><span class="line">0004 | 菜刀 | 3000 | 8500 ←1000+500+4000+3000</span><br><span class="line">0005 | 高压锅 | 6800 | 15300</span><br><span class="line">0006 | 叉子 | 500 | 15800</span><br><span class="line">0007 | 擦菜板 | 880 | 16680</span><br><span class="line">0008 | 圆珠笔 | 100 | 16780</span><br></pre></td></tr></table></figure></li>
+<li>使用示例  <figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">SELECT</span> product_id, product_name, sale_price,<br>　<span class="hljs-built_in">SUM</span> (sale_price) <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> product_id) <span class="hljs-keyword">AS</span> current_sum<br><span class="hljs-keyword">FROM</span> Product;<br></code></pre></td></tr></table></figure>
+  执行结果：  <figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">product_id |<span class="hljs-string"> product_name </span>|<span class="hljs-string"> sale_price </span>|<span class="hljs-string"> current_sum</span><br><span class="hljs-string">----------+-----------+-------------+------------</span><br><span class="hljs-string">0001 </span>|<span class="hljs-string"> T恤衫 </span>|<span class="hljs-string"> 1000 </span>|<span class="hljs-string"> 1000 ←1000</span><br><span class="hljs-string">0002 </span>|<span class="hljs-string"> 打孔器 </span>|<span class="hljs-string"> 500 </span>|<span class="hljs-string"> 1500 ←1000+500</span><br><span class="hljs-string">0003 </span>|<span class="hljs-string"> 运动T恤 </span>|<span class="hljs-string"> 4000 </span>|<span class="hljs-string"> 5500 ←1000+500+4000</span><br><span class="hljs-string">0004 </span>|<span class="hljs-string"> 菜刀 </span>|<span class="hljs-string"> 3000 </span>|<span class="hljs-string"> 8500 ←1000+500+4000+3000</span><br><span class="hljs-string">0005 </span>|<span class="hljs-string"> 高压锅 </span>|<span class="hljs-string"> 6800 </span>|<span class="hljs-string"> 15300</span><br><span class="hljs-string">0006 </span>|<span class="hljs-string"> 叉子 </span>|<span class="hljs-string"> 500 </span>|<span class="hljs-string"> 15800</span><br><span class="hljs-string">0007 </span>|<span class="hljs-string"> 擦菜板 </span>|<span class="hljs-string"> 880 </span>|<span class="hljs-string"> 16680</span><br><span class="hljs-string">0008 </span>|<span class="hljs-string"> 圆珠笔 </span>|<span class="hljs-string"> 100 </span>|<span class="hljs-string"> 16780</span><br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
 <li>计算移动平均<ul>
-<li>使用示例<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">--指定“最靠近的3行”作为汇总对象</span><br><span class="line">SELECT product_id, product_name, sale_price,</span><br><span class="line">AVG (sale_price) OVER (ORDER BY product_id</span><br><span class="line">ROWS 2 PRECEDING) AS moving_avg</span><br><span class="line">FROM Product;</span><br></pre></td></tr></table></figure>
-执行结果<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">product_id product_name sale_price moving_avg</span><br><span class="line">----------- ------------- ------------- ------------</span><br><span class="line">0001 T恤衫 1000 1000 ←(1000)/1</span><br><span class="line">0002 打孔器 500 750 ←(1000+500)/2</span><br><span class="line">0003 运动T恤 4000 1833 ←(1000+500+4000)/3</span><br><span class="line">0004 菜刀 3000 2500 ←(500+4000+3000)/3</span><br><span class="line">0005 高压锅 6800 4600 ←(4000+3000+6800)/3</span><br><span class="line">0006 叉子 500 3433</span><br><span class="line">0007 擦菜板 880 2726</span><br><span class="line">0008 圆珠笔 100 493</span><br></pre></td></tr></table></figure>
+<li>使用示例<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-comment">--指定“最靠近的3行”作为汇总对象</span><br><span class="hljs-keyword">SELECT</span> product_id, product_name, sale_price,<br>AVG (sale_price) <span class="hljs-keyword">OVER</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> product_id<br><span class="hljs-keyword">ROWS</span> <span class="hljs-number">2</span> <span class="hljs-keyword">PRECEDING</span>) <span class="hljs-keyword">AS</span> moving_avg<br><span class="hljs-keyword">FROM</span> Product;<br></code></pre></td></tr></table></figure>
+执行结果<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">product_id</span> <span class="hljs-string">product_name</span> <span class="hljs-string">sale_price</span> <span class="hljs-string">moving_avg</span><br><span class="hljs-string">-----------</span> <span class="hljs-string">-------------</span> <span class="hljs-string">-------------</span> <span class="hljs-string">------------</span><br><span class="hljs-number">0001 </span><span class="hljs-string">T恤衫</span> <span class="hljs-number">1000 </span><span class="hljs-number">1000</span> <span class="hljs-string">←(1000)/1</span><br><span class="hljs-number">0002</span> <span class="hljs-string">打孔器</span> <span class="hljs-number">500</span> <span class="hljs-number">750</span> <span class="hljs-string">←(1000+500)/2</span><br><span class="hljs-number">0003</span> <span class="hljs-string">运动T恤</span> <span class="hljs-number">4000 </span><span class="hljs-number">1833</span> <span class="hljs-string">←(1000+500+4000)/3</span><br><span class="hljs-number">0004</span> <span class="hljs-string">菜刀</span> <span class="hljs-number">3000 </span><span class="hljs-number">2500</span> <span class="hljs-string">←(500+4000+3000)/3</span><br><span class="hljs-number">0005</span> <span class="hljs-string">高压锅</span> <span class="hljs-number">6800 </span><span class="hljs-number">4600</span> <span class="hljs-string">←(4000+3000+6800)/3</span><br><span class="hljs-number">0006</span> <span class="hljs-string">叉子</span> <span class="hljs-number">500</span> <span class="hljs-number">3433</span><br><span class="hljs-number">0007</span> <span class="hljs-string">擦菜板</span> <span class="hljs-number">880</span> <span class="hljs-number">2726</span><br><span class="hljs-number">0008</span> <span class="hljs-string">圆珠笔</span> <span class="hljs-number">100</span> <span class="hljs-number">493</span><br></code></pre></td></tr></table></figure>
 <h2 id="GROUPING运算符"><a href="#GROUPING运算符" class="headerlink" title="GROUPING运算符"></a>GROUPING运算符</h2>用于小计、合计，不常用</li>
 </ul>
 </li>
 </ol>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">王涛</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2021/05/29/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80%E6%95%B4%E7%90%86/">http://example.com/2021/05/29/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80%E6%95%B4%E7%90%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">厚积薄发</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">王涛</div><div class="author-info__description">做个有趣的工程师，去创造本就该有的美好</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">1</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">1</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8CSQL"><span class="toc-number">1.</span> <span class="toc-text">数据库和SQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E5%9F%BA%E7%A1%80"><span class="toc-number">2.</span> <span class="toc-text">查询基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%81%9A%E5%90%88%E4%B8%8E%E6%8E%92%E5%BA%8F"><span class="toc-number">3.</span> <span class="toc-text">聚合与排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%86%E5%90%88%E8%BF%90%E7%AE%97"><span class="toc-number">4.</span> <span class="toc-text">集合运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%A4%E5%B9%B6%E5%B7%AE%E9%9B%86%E8%BF%90%E7%AE%97"><span class="toc-number">4.1.</span> <span class="toc-text">交并差集运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%81%94%E7%BB%93"><span class="toc-number">4.2.</span> <span class="toc-text">联结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AA%97%E5%8F%A3%E5%87%BD%E6%95%B0-OLAP-%E5%87%BD%E6%95%B0"><span class="toc-number">5.</span> <span class="toc-text">窗口函数(OLAP 函数)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GROUPING%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">6.</span> <span class="toc-text">GROUPING运算符</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/05/29/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80%E6%95%B4%E7%90%86/" title="数据库基础整理"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数据库基础整理"/></a><div class="content"><a class="title" href="/2021/05/29/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80%E6%95%B4%E7%90%86/" title="数据库基础整理">数据库基础整理</a><time datetime="2021-05-29T03:10:58.000Z" title="发表于 2021-05-29 11:10:58">2021-05-29</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 王涛</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
