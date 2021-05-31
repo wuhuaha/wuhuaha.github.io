@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta name="description" content="做个有趣的工程师，去创造本就该有的美好" />
+      
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title> 厚积薄发</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/favicon.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
+      />
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+       
+ 
+
+      <!-- mermaid -->
+      
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      
+<section class="cover">
+    
+  <div class="cover-frame">
+    <div class="bg-box">
+      <img src="/images/cover1.jpg" alt="image frame" />
+    </div>
+    <div class="cover-inner text-center text-white">
+      <h1><a href="/">厚积薄发</a></h1>
+      <div id="subtitle-box">
+        
+        <span id="subtitle"></span>
+        
+      </div>
+      <div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="cover-learn-more">
+    <a href="javascript:void(0)" class="anchor"><i class="ri-arrow-down-line"></i></a>
+  </div>
+</section>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
+
+
+<!-- Subtitle -->
+
+  <script>
+    try {
+      var typed = new Typed("#subtitle", {
+        strings: ['做个有趣的工程师，去创造本就该有的美好', '', ''],
+        startDelay: 0,
+        typeSpeed: 200,
+        loop: true,
+        backSpeed: 100,
+        showCursor: true
+      });
+    } catch (err) {
+      console.log(err)
+    }
+  </script>
+  
+<div id="main">
+  <section class="outer">
+  
+  
+  
+
+<div class="notice" style="margin-top:50px">
+    <i class="ri-heart-fill"></i>
+    <div class="notice-content" id="broad"></div>
+</div>
+<script type="text/javascript">
+    fetch('https://v1.hitokoto.cn')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("broad").innerHTML = data.hitokoto;
+        })
+        .catch(console.error)
+</script>
+
+<style>
+    .notice {
+        padding: 20px;
+        border: 1px dashed #e6e6e6;
+        color: #969696;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        background: #fbfbfb50;
+        border-radius: 10px;
+    }
+
+    .notice i {
+        float: left;
+        color: #999;
+        font-size: 16px;
+        padding-right: 10px;
+        vertical-align: middle;
+        margin-top: -2px;
+    }
+
+    .notice-content {
+        display: initial;
+        vertical-align: middle;
+    }
+</style>
+  
+  <article class="articles">
+    
+    
+    
+    
+    <article
+  id="post-进程与线程"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/05/31/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/"
+    >进程与线程</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/05/31/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/" class="article-date">
+  <time datetime="2021-05-31T06:07:45.000Z" itemprop="datePublished">2021-05-31</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/c/">c++</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="1-基本区别"><a href="#1-基本区别" class="headerlink" title="1.基本区别"></a>1.基本区别</h2><p>程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。 在当代面向线程设计的计算机结构中，进程是线程的容器。程序是指令、数据及其组织形式的描述，进程是程序的实体。是计算机中的程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。程序是指令、数据及其组织形式的描述，进程是程序的实体。</p>
+<p><strong>线程（thread）</strong> 是操作系统能够进行运算调度的最小单位。它被包含在进程之中，是进程中的实际运作单位。一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。</p>
+<blockquote>
+<p>我们简单总结下：</p>
+</blockquote>
+<p>进程：指在系统中正在运行的一个应用程序；程序一旦运行就是进程；<strong>进程——资源分配的最小单位</strong>  。</p>
+<p>线程：系统分配处理器时间资源的基本单元，或者说进程之内独立执行的一个单元执行流。<strong>线程——程序执行的最小单位</strong>。</p>
+<p>进程有独立的地址空间，一个进程崩溃后，在保护模式下不会对其它进程产生影响，而线程只是一个进程中的不同执行路径。线程有自己的堆栈和局部变量，但线程之间没有单独的地址空间，所以多进程的程序要比多线程的程序健壮，但在进程切换时，耗费资源较大，效率要差一些。但对于一些要求同时进行并且又要共享某些变量的并发操作，只能用线程，不能用进程。</p>
+<p>两个名词不过是对应的CPU时间段的描述，名词就是这样的功能。</p>
+<ul>
+<li><strong>进程就是上下文切换之间的程序执行的部分。是运行中的程序的描述，也是对应于该段CPU执行时间的描述。</strong></li>
+<li><strong>在软件编码方面，我们说的进程，其实是稍不同的，编程语言中创建的进程是一个无限loop，对应的是tcb块。这个是操作系统进行调度的单位。所以和上面的cpu执行时间段还是不同的。</strong></li>
+<li><strong>进程，与之相关的东东有寻址空间，寄存器组，堆栈空间等。即不同的进程，这些东东都不同，从而能相互区别。</strong></li>
+</ul>
+<p>线程是什么呢？<br>进程的颗粒度太大，每次的执行都要进行进程上下文的切换。如果我们把进程比喻为一个运行在电脑上的软件，那么一个软件的执行不可能是一条逻辑执行的，必定有多个分支和多个程序段，就好比要实现程序A，实际分成 a，b，c等多个块组合而成。那么这里具体的执行就可能变成：</p>
+<p>程序A得到CPU =》CPU加载上下文，开始执行程序A的a小段，然后执行A的b小段，然后再执行A的c小段，最后CPU保存A的上下文。</p>
+<p>这里a，b，c的执行是共享了A进程的上下文，CPU在执行的时候仅仅切换线程的上下文，而没有进行进程上下文切换的。进程的上下文切换的时间开销是远远大于线程上下文时间的开销。这样就让CPU的有效使用率得到提高。这<strong>里的a，b，c就是线程，也就是说线程是共享了进程的上下文环境，的更为细小的CPU时间段。线程主要共享的是进程的地址空间。</strong></p>
+<ol start="2">
+<li><h2 id="深入理解："><a href="#深入理解：" class="headerlink" title="深入理解："></a>深入理解：</h2></li>
+</ol>
+<p><img src="https://img2018.cnblogs.com/blog/1629488/201906/1629488-20190622115300479-2129397443.png" alt="进程"></p>
+<h3 id="2-1-进程-线程-内存-文件-网络句柄"><a href="#2-1-进程-线程-内存-文件-网络句柄" class="headerlink" title="2.1 进程(线程+内存+文件/网络句柄)"></a>2.1 进程(线程+内存+文件/网络句柄)</h3><p>我们通过上面的图片进行进一步理解：</p>
+<p><strong>“内存”：</strong><br>我们通常所理解的内存是我们所见到的(2G/4G/8G/16G)物理内存,它为什么会在进程之中呢？<br>实际上，这里的内存是逻辑内存。指的是内存的寻址空间。每个进程的内存是相互独立的。<br>否则的话会出现一个问题：我们把指针的值改一改就指向其他进程的内存了，通过这样我们岂不是就可以看到其他进程中”微信”或者是”网上银行”的信息，<br>这样的话，那我们的微信聊天记录或者是银行账户的信息就都被别人找到了，这是一个很危险的信号！显然这样是不可能的。</p>
+<p><strong>“文件/网络句柄”：</strong><br>它们是所有的进程所共有的，例如打开同一个文件，去抢同一个网络的端口这样的操作是被允许的。</p>
+<p><strong>“线程”：</strong><br>接下来，我们就要介绍一下我们的“线程”有关知识</p>
+<p><img src="https://img2018.cnblogs.com/blog/1629488/201906/1629488-20190622115318812-109279192.png" alt="线程"></p>
+<h3 id="2-2-线程-栈-PC-TLS"><a href="#2-2-线程-栈-PC-TLS" class="headerlink" title="2.2 线程(栈+PC+TLS)"></a>2.2 线程(栈+PC+TLS)</h3><h4 id="2-2-1-栈"><a href="#2-2-1-栈" class="headerlink" title="2.2.1 栈:"></a>2.2.1 栈:</h4><p>我们通常都是说调用堆栈，其实这里的堆是没有含义的，调用堆栈就是调用栈的意思。<br>那么我们的栈里面有什么呢？<br>我们从主线程的入口main函数，会不断的进行函数调用，<br>每次调用的时候，会把所有的参数和返回地址压入到栈中。</p>
+<h4 id="2-2-2-PC："><a href="#2-2-2-PC：" class="headerlink" title="2.2.2 PC："></a>2.2.2 PC：</h4><p>Program Counter 程序计数器，操作系统真正运行的是一个个的线程，<br>而我们的进程只是它的一个容器。PC就是指向当前的指令，而这个指令是放在内存中。<br>每个线程都有一串自己的指针，去指向自己当前所在内存的指针。<br>计算机绝大部分是存储程序性的，说的就是我们的数据和程序是存储在同一片内存里的<br>这个内存中既有我们的数据变量又有我们的程序。所以我们的PC指针就是指向我们的内存的。</p>
+<h5 id="2-2-2-1-缓冲区溢出"><a href="#2-2-2-1-缓冲区溢出" class="headerlink" title="2.2.2.1 缓冲区溢出"></a>2.2.2.1 缓冲区溢出</h5><p>例如我们经常听到一个漏洞：<strong>缓冲区溢出</strong><br>这是什么意思呢？<br>例如：我们有个地方要输入用户名，本来是用来存数据的地方。<br>然后黑客把数据输入的特别长。这个长度超出了我们给数据存储的内存区，这时候跑到了<br>我们给程序分配的一部分内存中。黑客就可以通过这种办法将他所要运行的代码<br>写入到用户名框中，来植入进来。我们的解决方法就是，用用户名的长度来限制不要超过<br>用户名的缓冲区的大小来解决。</p>
+<h4 id="2-2-3-TLS"><a href="#2-2-3-TLS" class="headerlink" title="2.2.3 TLS:"></a>2.2.3 TLS:</h4><p>全称：thread local storage<br>之前我们看到每个进程都有自己独立的内存，这时候我们想，我们的线程有没有一块独立的内存呢?答案是有的，就是TLS。<br>可以用来存储我们线程所独有的数据。<br>可以看到：线程才是我们操作系统所真正去运行的，而进程呢，则是像容器一样他把需要的一些东西放在了一起，而把不需要的东西做了一层隔离，进行隔离开来。</p>
+<h2 id="3、切换消耗"><a href="#3、切换消耗" class="headerlink" title="3、切换消耗"></a>3、切换消耗</h2><h3 id="进程切换的开销"><a href="#进程切换的开销" class="headerlink" title="进程切换的开销"></a>进程切换的开销</h3><p>开销分成两种:<br>A.直接开销：</p>
+<ul>
+<li>切换页表全局目录；</li>
+<li>切换内核态堆栈；</li>
+<li>切换硬件上下文：</li>
+<li>寄存器当中的数据；</li>
+<li>刷新TLB；</li>
+<li>执行操作系统调度器的代码</li>
+</ul>
+<p>B.间接开销：<br>间接开销指的是由于切换到一个新进程后，各种缓存对于新的进程而言未命中的概率非常大。进程如果跨CPU调度，那么之前的TLB、L1、L2、L3缓存因为运行的进程已经变了，缓存所带来的空间局部性和时间局部性的优势失效，当前缓存起来的代码、数据失效。这将导致新进程需要重新从内存当中获取数据和代码，并将其缓存起来。从而导致穿透到内存的IO会变多，由于CPU和内存读取速度的差异很大，这部分带来的开销也非常大。</p>
+<h3 id="线程切换的开销"><a href="#线程切换的开销" class="headerlink" title="线程切换的开销"></a>线程切换的开销</h3><p>线程切换和进程切换之间的主要区别在于：在线程切换期间，虚拟内存空间保持不变。<br>进程切换期间，TLB会被刷新，从而使内存访问在一段时间内变得更加昂贵。</p>
+<h2 id="4-通讯方式"><a href="#4-通讯方式" class="headerlink" title="4.通讯方式"></a>4.通讯方式</h2><p>进程间：</p>
+<ul>
+<li><p>共享内存，消息队列传递，</p>
+</li>
+<li><p>无名管道(有血缘关系的进程间)，有名管道(允许无亲缘关系关系进程间通信)，</p>
+</li>
+<li><p>信号，信号量(主要作为进程间以及同一进程内不同线程之间的同步手段。)，</p>
+</li>
+<li><p>套接字</p>
+<p>几种方式的比较：<br>(1) 管道：速度慢、容量有限<br>(2) 消息队列：容量收到系统限制，且要注意第一次读的时候，要考虑上一次没有读完数据的问题。是用于两个进程之间的通讯，首先在一个进程中创建一个消息队列，然后再往消息队列中写数据，而另一个进程则从那个消息队列中取数据。需要注意的是，消息队列是用创建文件的方式建立的，如果一个进程向某个消息队列中写入了数据之后，另一个进程并没有取出数据，即使向消息队列中写数据的进程已经结束，保存在消息队列中的数据并没有消失，也就是说下次再从这个消息队列读数据的时候，就是上次的数据！<br>(3) 信号量：不能传递复杂信息，只能用来同步。<br>(4) 共享内存：能够很容易控制容量，速度快，但要保持同步，比如一个进程在写的时候，另一个进程要注意读写的问题，相当于线程中的线程安全。</p>
+</li>
+</ul>
+<p>线程间：</p>
+<ul>
+<li>锁机制(互斥锁、条件变量、读写锁)，信号量，信号</li>
+<li>线程间的通信目的主要是用于线程同步，所以线程没有像进程通信中的用于数据交换的通信机制。</li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" rel="tag">计算机系统</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-移动语义与完美转发"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/05/30/%E7%A7%BB%E5%8A%A8%E8%AF%AD%E4%B9%89%E4%B8%8E%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/"
+    >移动语义与完美转发</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/05/30/%E7%A7%BB%E5%8A%A8%E8%AF%AD%E4%B9%89%E4%B8%8E%E5%AE%8C%E7%BE%8E%E8%BD%AC%E5%8F%91/" class="article-date">
+  <time datetime="2021-05-30T14:41:59.000Z" itemprop="datePublished">2021-05-30</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/c/">c++</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>新标准重新定义了lvalue和rvalue，并允许函数依照这两种不同的类型进行重载。通过对于右值（rvalue）的重新定义，语言实现了移动语义（move semantic）和完美转发（perfect forwarding），通过这种方法，C++实现了在保留原有的语法并不改动已存在的代码的基础上提升代码性能的目的。作为一个C++0x标准的初学者，理解这些概念其实还有有一定的困难的，加上网上能够找得到的中文资源有比较的少，少有的资源写的也都不是那么的通俗易懂，多少有点晦涩，这也为学习设置了一定的障碍。同样作为初学者，我就花了不少时间研究这些概念，终于算是有所体悟。这里就把我粗浅的理解记录于此，希望能够给后来接触这些内容的同侪们以帮助，也供我日后参考。谬误之处在所难免，还望不吝赐教。</p>
+<h2 id="移动语义解决了什么问题"><a href="#移动语义解决了什么问题" class="headerlink" title="移动语义解决了什么问题"></a>移动语义解决了什么问题</h2><p>我们先看一段代码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class Test &#123;</span><br><span class="line">    int * arr&#123;nullptr&#125;;</span><br><span class="line">public:</span><br><span class="line">    Test():arr(new int[5000]&#123;1,2,3,4&#125;) &#123; </span><br><span class="line">    	cout &lt;&lt; &quot;default constructor&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    Test(const Test &amp; t) &#123;</span><br><span class="line">        cout &lt;&lt; &quot;copy constructor&quot; &lt;&lt; endl;</span><br><span class="line">        if (arr == nullptr) arr = new int[5000];</span><br><span class="line">        memcpy(arr, t.arr, 5000*sizeof(int));</span><br><span class="line">    &#125;</span><br><span class="line">    ~Test()&#123;</span><br><span class="line">        cout &lt;&lt; &quot;destructor&quot; &lt;&lt; endl;</span><br><span class="line">        delete [] arr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这是一段常见的类的定义。在其中我们定义了一个<code>int</code>类型数组<code>arr</code>，它一共有5000个元素。考虑到我们可以使用一个已有的<code>Test</code>对象来初始化一个新的<code>Test</code>对象，我们实现了复制构造函数（copy constructor）。</p>
+<p>接下来，我们考虑一个这样的应用场景：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int main() &#123;</span><br><span class="line">	Test reusable;</span><br><span class="line">	// do something to reusable</span><br><span class="line">	Test duplicated(reusable);</span><br><span class="line">	// do something to reusable</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们创建了一个<code>reusable</code>变量并对其做了某一些操作，之后我们使用这个更改过的<code>reusable</code>变量初始化一个<code>duplicated</code>变量，在对其进行初始化之后，我们依然需要对<code>reusable</code>做其他的操作。在这个情境下，<code>reusable</code>和<code>duplicated</code>变量各自有自己的用处，没有谁是为谁附带产生的。所以我们看到，在这个情境下，我们的复制构造函数是合情合理的。</p>
+<p>现在我们考虑另外一个场景：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Test createTest() &#123;</span><br><span class="line">    return Test();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    Test t(createTest());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个场景当中，我们需要使用一个工厂函数来构造<code>Test</code>的实例。那么在这个场景下，我们的复制构造函数被调用了2次。这两次调用相当于复制了10000个元素，是一个不小的开销。可是我们的这个开销有意义吗？我们知道，在工厂函数当中建立的<code>Test</code>实例在函数返回时就会被析构，而用于返回值的<code>Test</code>的临时实例也会在将值赋给<code>main</code>函数当中的<code>t</code>之后被析构。也就是说，这两个临时对象事实上并没有什么意义。由于构造他们而产生的复制的开销其实完全没有必要（事实上，编译器一般会对这种情况进行(N)RVO，但不见得每次都能很好的优化）。所以我们就在考虑，有没有可能我们可以将在工厂函数当中构造的成员变量的那块内存“偷”过来，而不是重新开辟一块内存，然后再将之前的内容复制过来呢？</p>
+<h2 id="移动语义（move-semantic）"><a href="#移动语义（move-semantic）" class="headerlink" title="移动语义（move semantic）"></a>移动语义（move semantic）</h2><p>铛铛铛铛！移动语义登场了！移动语义就是为了解决上面的这种问题而产生的。通过移动语义，我们可以在没有必要的时候避免复制。那么在接下来，我们就重点来谈一谈移动构造函数（move constructor）。相信到这里你已经意识到了，移动构造函数的出现就是为了解决复制构造函数的这个弊病。所以，其实移动构造函数应该和复制构造函数实现差不多的功能。那么，它也应该是一种构造函数的重载（好废的废话……）。所以，我们可以想象出来，其实移动构造函数大概就会是这个样子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Test(&lt;KEYWORD&gt; t):arr(t.arr)&#123;t.arr = nullptr;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里解释一下，通过移动构造函数，事实上我们是做了一个浅拷贝（shallow copy）。至于要将之前的指针置为空的原因在于，我们的类会在析构的时候delete掉我们的数组。那么我们浅拷贝出来的这个对象的成员变量（<code>arr</code>指针）就变成了一个悬挂指针（dangling pointer）。</p>
+<p>好了，现在的问题变成了，这个<code>&lt;KEYWORD&gt;</code>究竟是什么？编译器如何自动判断到底应该调用复制构造函数<em>（我突然想起来这个东西的翻译貌似应该是拷贝构造函数，但是既然都已经写了这么多了，我就不改了）</em>还是移动构造函数呢？</p>
+<h2 id="左值（lvalue）、右值（rvalue）、左值引用（lvalue-reference）和右值引用（rvalue-reference）"><a href="#左值（lvalue）、右值（rvalue）、左值引用（lvalue-reference）和右值引用（rvalue-reference）" class="headerlink" title="左值（lvalue）、右值（rvalue）、左值引用（lvalue reference）和右值引用（rvalue reference）"></a>左值（lvalue）、右值（rvalue）、左值引用（lvalue reference）和右值引用（rvalue reference）</h2><h3 id="左值和右值"><a href="#左值和右值" class="headerlink" title="左值和右值"></a>左值和右值</h3><p>为了回答上面的这个问题，我们首先需要明确左值和右值的概念。C++定义了与C不相同的左值和右值的判断方法，不过说起来非常简单：<strong>凡是真正的存在内存当中，而不是寄存器当中的值就是左值，其余的都是右值</strong>。其实更通俗一点的说法就是：<strong>凡是取地址（<code>&amp;</code>）操作可以成功的都是左值，其余都是右值</strong>。现在相信大家都已经知道左值和右值的关系了。我们来看几个例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// lvalues:</span><br><span class="line">int i = 42;</span><br><span class="line">i = 43; // ok, i is an lvalue </span><br><span class="line">int* p = &amp;i; // ok, i is an lvalue </span><br><span class="line">int&amp; foo();</span><br><span class="line">foo() = 42; // ok, foo() is an lvalue</span><br><span class="line">int* p1 = &amp;foo(); // ok, foo() is an lvalue</span><br><span class="line">// rvalues: </span><br><span class="line">int foobar(); </span><br><span class="line">int j = 0;</span><br><span class="line">j = foobar(); // ok, foobar() is an rvalue</span><br><span class="line">int k = j + 2; // ok, j+2 is an rvalue</span><br><span class="line">int* p2 = &amp;foobar(); // error, cannot take the address of an rvalue </span><br><span class="line">j = 42; // ok, 42 is an rvalue</span><br></pre></td></tr></table></figure>
+
+<p>那么，函数是不是就只可以作为右值呢？其实不是。考虑一个我们司空见惯的例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; vec = &#123;1,2,3,4,5&#125;;</span><br><span class="line">vec[1] = 99; // overloaded operator[]</span><br></pre></td></tr></table></figure>
+
+<p>我们看到，其实<code>operator[]</code>是一个函数，其返回值依然可以作为左值。</p>
+<h3 id="左值引用和右值引用"><a href="#左值引用和右值引用" class="headerlink" title="左值引用和右值引用"></a>左值引用和右值引用</h3><p>好了，在明确了左值和右值的关系之后，左值引用而右值引用的概念也就显而易见了。<strong>对于左值的引用就是左值引用，而对于右值的引用就是右值引用</strong>。虽然这么说，但是其实这个概念还并不是那么好理解。</p>
+<p>事实上，不好理解的原因是我们之前从来没有真正的去区分过这两个概念，因为我们曾经将左值引用直接称为“引用”。也就是说，我们曾经一直用的<code>int&amp;</code>事实上是对于<code>int</code>类型左值的引用。而对于右值呢？在新标准当中我们使用<code>int&amp;&amp;</code>来表示。我们不妨看看几个例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void foo(const int &amp; i) &#123; cout &lt;&lt; &quot;const int &amp; &quot; &lt;&lt; i &lt;&lt; endl; &#125;</span><br><span class="line">void foo(int &amp; i) &#123; cout &lt;&lt; &quot;int &amp; &quot; &lt;&lt; i &lt;&lt; endl; &#125;</span><br><span class="line">void foo(int &amp;&amp; i) &#123; cout &lt;&lt; &quot;int &amp;&amp; &quot; &lt;&lt; i &lt;&lt; endl; &#125;</span><br><span class="line">void foo(const int &amp;&amp; i) &#123; cout &lt;&lt; &quot;const int &amp;&amp; &quot; &lt;&lt; i &lt;&lt; endl; &#125; // 这是个奇葩，我一会说</span><br></pre></td></tr></table></figure>
+
+<p>我们在以往使用的时候大多会使用第一种形式。其实，第一种形式是一种神奇的形式，因为<code>const int &amp;</code>既可以绑定左值，也可以绑定右值。所以在没有后面三个重载函数的情况下，我们调用一下语句：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int i = 2;</span><br><span class="line">foo(i);</span><br><span class="line">foo(2);</span><br></pre></td></tr></table></figure>
+
+<p>他们的输出都是<code>const int &amp; 2</code>。而如果在只有第二个函数而没有其他函数的时候，第三条语句是违法的。在只有第三个函数没有其它函数的时候，第二条语句是违法的。所以我们总结一下：const reference可以绑定所有的值，而其他类型的引用只能绑定自己类型的值。在这四种函数都存在的情况下，每一种函数都会绑定与自己最接近的那个值。也就是说，在四个函数都存在的情况下，当我们再次运行上面的这段代码，输出的结果就将变成：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int &amp; 2</span><br><span class="line">int &amp;&amp; 2</span><br></pre></td></tr></table></figure>
+
+<p>所以，当我们运行下面的语句：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">foo(i);</span><br><span class="line">foo(j);</span><br><span class="line">foo(2);</span><br><span class="line">foo([]()-&gt;const int &amp;&amp; &#123;return 2;&#125;());</span><br></pre></td></tr></table></figure>
+
+<p>我们得到的结果将会是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int &amp; 2</span><br><span class="line">const int &amp; 2</span><br><span class="line">int &amp;&amp; 2</span><br><span class="line">const int &amp;&amp; 2</span><br></pre></td></tr></table></figure>
+
+<p>这里解释一下第四个。第四条语句编译的时候会有Warning，提示”Returning reference to local temporary object”。想想也确实是这么个事情，不过它让我通过了，而且结果没错误。我觉得这个是不靠谱的。不过其实仔细考虑一下，常量右值引用其实不太能想出什么应用场景。所以个人认为，这只是贯彻C++标准当中”不应当组织程序员拿起枪射自己的脚“的精神，到不一定有什么实际意义，所以这个就不要纠结了。</p>
+<p>相信现在大家已经能够对于左值、右值、左值引用和右值引用有一个准确的认识了。</p>
+<h2 id="回到之前的问题"><a href="#回到之前的问题" class="headerlink" title="回到之前的问题"></a>回到之前的问题</h2><p>现在我们可以知道上面那个<code>Test</code>类当中的神奇的<code>&lt;KEYWORD&gt;</code>到底是什么了。其实他就是<code>Test &amp;&amp;</code>。由于左值和右值是两种不同的类型，所以可以依照这个类型进行重载。所以我们的<code>Test</code>类就变成了这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class Test &#123;</span><br><span class="line">    int * arr&#123;nullptr&#125;;</span><br><span class="line">public:</span><br><span class="line">    Test():arr(new int[5000]&#123;1,2,3,4&#125;) &#123; </span><br><span class="line">    	cout &lt;&lt; &quot;default constructor&quot; &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    Test(const Test &amp; t) &#123;</span><br><span class="line">        cout &lt;&lt; &quot;copy constructor&quot; &lt;&lt; endl;</span><br><span class="line">        if (arr == nullptr) arr = new int[5000];</span><br><span class="line">        memcpy(arr, t.arr, 5000*sizeof(int));</span><br><span class="line">    &#125;</span><br><span class="line">    Test(Test &amp;&amp; t): arr(t.arr) &#123;</span><br><span class="line">        cout &lt;&lt; &quot;move constructor&quot; &lt;&lt; endl;</span><br><span class="line">        t.arr = nullptr;</span><br><span class="line">    &#125;</span><br><span class="line">    ~Test()&#123;</span><br><span class="line">        cout &lt;&lt; &quot;destructor&quot; &lt;&lt; endl;</span><br><span class="line">        delete [] arr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>所以，当我们再次考虑下面这个应用场景的时候：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Test createTest() &#123;</span><br><span class="line">    return Test();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    Test t(createTest());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们会发现，打印的结果变成了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">default constructor</span><br><span class="line">move constructor</span><br><span class="line">destructor</span><br><span class="line">move constructor</span><br><span class="line">destructor</span><br><span class="line">destructor</span><br></pre></td></tr></table></figure>
+
+<p>也就是说，我们的<code>Test</code>实例在工厂函数当中被使用默认构造函数（default constructor）构造一次之后，调用的全部都是移动构造函数，因为我们发现其实所有的这些值都是右值。这极大地节省了开支。</p>
+<blockquote>
+<p>这里有一个编译器的trick。gcc是一个丧心病狂的编译器，他会强制进行(N)RVO。如果你不做任何设置直接用GCC编译运行上面的代码，你将看到的是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default constructor</span><br></pre></td></tr></table></figure>
+
+<p>这个时候不要怀疑我上面说的东西有问题或者你写错了。请直接在gcc后面添加编译参数<code>-fno-elide-constructors</code>。所以整个的编译语句应该是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -std=c++11 -fno-elide-constructors test.cpp # for instance</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="移动语义再多说几句"><a href="#移动语义再多说几句" class="headerlink" title="移动语义再多说几句"></a>移动语义再多说几句</h2><p>现在我们再来看看一开始那个<code>reusable</code>的例子。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int main() &#123;</span><br><span class="line">	Test reusable;</span><br><span class="line">	// do something to reusable</span><br><span class="line">	Test duplicated(reusable);</span><br><span class="line">	// do something to reusable</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果现在我们不想复制<code>reusable</code>了，我们也想在构造<code>duplicated</code>的时候使用转移构造函数，那么应该怎么做呢？新标准给我们提供了一个解决方案：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Test duplicated(std::move(reusable));</span><br></pre></td></tr></table></figure>
+
+<p>这个<code>std::move()</code>的作用是将左值转换为右值。不过这里要注意的一点是，如果我们在这里使用了<code>move</code>的话，那么后面我们就不能再对<code>reusable</code>进行操作了。因为转移构造函数已经将<code>reusable</code>的成员变量<code>arr</code>指针置为空了。</p>
+<p>讲解完了转移构造函数，其实转移赋值语句（move assignment）与之同理，各位就自己研究一下吧。由于STL已经默认对所有的代码进行了右值引用的改写，所以现在当你运行你之前写过的代码时，你不需要做任何的更改，就会发现似乎更快了一些。</p>
+<h2 id="进一步探讨左值和右值"><a href="#进一步探讨左值和右值" class="headerlink" title="进一步探讨左值和右值"></a>进一步探讨左值和右值</h2><p>我们来考虑下面的情景：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">void doWork(TYPE&amp;&amp; param) &#123;</span><br><span class="line">	// ops and expressions using std::move(param)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个代码是从Scott Meyers的演讲当中摘取的。现在的问题是：**<code>param</code>是右值吗？** 答案是：不！<code>param</code>是一个左值。</p>
+<p>这里牵扯到一个概念，即事实上左值和右值与类型是没有关系的，即<code>int</code>既可以是左值，也可以是右值。区别左值和右值的唯一方法就是其定义，即<strong>能否取到地址</strong>。在这里，我们明显可以对<code>param</code>进行取地址操作，所以它是一个左值。也就是说，但凡有名字的“右值”，其实都是左值。这也就是为什么上面的代码当中鼓励大家对所有的变量使用<code>std::move()</code>转成右值的原因。</p>
+<h2 id="完美转发（perfect-forward）又是在做什么"><a href="#完美转发（perfect-forward）又是在做什么" class="headerlink" title="完美转发（perfect forward）又是在做什么"></a>完美转发（perfect forward）又是在做什么</h2><p>我们依然考虑一个例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">void func(T t) &#123;</span><br><span class="line">    cout &lt;&lt; &quot;in func&quot; &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void relay(T&amp;&amp; t) &#123;</span><br><span class="line">    cout &lt;&lt; &quot;in relay&quot; &lt;&lt; endl;</span><br><span class="line">    func(t);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    relay(Test());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子当中，我们的期待是，我们在<code>main</code>当中调用<code>relay</code>，<code>Test</code>的临时对象作为一个右值传入<code>relay</code>，在<code>relay</code>当中又被转发给了<code>func</code>，那这时候转发给<code>func</code>的参数<code>t</code>也应当是一个右值。也就是说，我们希望：<strong>当<code>relay</code>的参数是右值的时候，<code>func</code>的参数也是右值；当<code>relay</code>的参数是左值的时候，<code>func</code>的参数也是左值</strong>。</p>
+<p>那么现在我们来运行一下这个程序，我们会看到，结果与我们预想的似乎并不相同：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">default constructor</span><br><span class="line">in relay</span><br><span class="line">copy constructor</span><br><span class="line">in func</span><br><span class="line">destructor</span><br><span class="line">destructor</span><br></pre></td></tr></table></figure>
+
+<p>我们看到，在<code>relay</code>当中转发的时候，调用了复制构造函数，也就是说编译器认为这个参数<code>t</code>并不是一个右值，而是左值。这个的原因已经在上一节将结果了，因为它有一个名字。那么如果我们想要实现我们所说的，如果传进来的参数是一个左值，则将它作为左值转发给下一个函数；如果它是右值，则将其作为右值转发给下一个函数，我们应该怎么做呢？</p>
+<p>这时，我们需要<code>std::forward&lt;T&gt;()</code>。与<code>std::move()</code>相区别的是，<code>move()</code>会无条件的将一个参数转换成右值，而<code>forward()</code>则会保留参数的左右值类型。所以我们的代码应该是这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">void func(T t) &#123;</span><br><span class="line">    cout &lt;&lt; &quot;in func &quot; &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void relay(T&amp;&amp; t) &#123;</span><br><span class="line">    cout &lt;&lt; &quot;in relay &quot; &lt;&lt; endl;</span><br><span class="line">    func(std::forward&lt;T&gt;(t));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在运行的结果就成为了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">default constructor</span><br><span class="line">in relay</span><br><span class="line">move constructor</span><br><span class="line">in func</span><br><span class="line">destructor</span><br><span class="line">destructor</span><br></pre></td></tr></table></figure>
+
+<p>而如果我们的调用方法变成：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int main() &#123;</span><br><span class="line">    Test t;</span><br><span class="line">    relay(t);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那么输出就会变成：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">default constructor</span><br><span class="line">in relay</span><br><span class="line">copy constructor</span><br><span class="line">in func</span><br><span class="line">destructor</span><br><span class="line">destructor</span><br></pre></td></tr></table></figure>
+
+<p>完美地实现了我们所要的转发效果。</p>
+<h2 id="通用引用（universal-reference）"><a href="#通用引用（universal-reference）" class="headerlink" title="通用引用（universal reference）"></a>通用引用（universal reference）</h2><p>现在一定有同学感到奇怪了，既然我刚才讲的完美转发就是怎么传进来怎么传给别人，那么也就是说在后面这个例子当中我们传进来的这个参数<code>t</code>竟然是一个左值！可是我们的参数表里不是写着<code>T&amp;&amp;</code>，要求接受一个右值吗？其实不是这样的。这里就牵扯到一个新的概念，叫做通用引用。</p>
+<p>通用引用（universal reference）是Scott Meyers在<em>C++ and Beyond 2012</em>演讲中自创的一个词，用来特指一种引用的类型。构成通用引用有两个条件：</p>
+<ol>
+<li>必须满足<code>T&amp;&amp;</code>这种形式</li>
+<li>类型<code>T</code>必须是通过推断得到的</li>
+</ol>
+<p>所以，在我们完美转发这个部分的例子当中，我们所使用的这种引用，其实是通用引用，而不是所谓的单纯的右值引用。因为我们的函数是模板函数，<code>T</code>的类型是推断出来的，而不是指定的。那么相应的，如果有一段这样的代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">class TestClass &#123;</span><br><span class="line">	public:</span><br><span class="line">		void func(T&amp;&amp; t) &#123;&#125; //这个T&amp;&amp;是不是一个通用引用呢</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的这个<code>T</code>是不是通用引用呢？答案是不是。因为当这个类初始化的时候这个<code>T</code>就已经被确定了，不需要推断。</p>
+<p>所以，可以构成通用引用的有如下几种可能：</p>
+<ol>
+<li><p>函数模板参数（function template parameters）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">void f(T&amp;&amp; param);</span><br></pre></td></tr></table></figure></li>
+<li><p><code>auto</code>声明（auto declaration）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto &amp;&amp; var = ...;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>typedef</code>声明（typedef declaration）</p>
+</li>
+<li><p><code>decltype</code>声明（decltype declaration）</p>
+</li>
+</ol>
+<p>那么，这个通用引用与其他的引用有什么区别呢？其实最重要的一点就是<em>引用类型合成</em>（Reference Collapsing Rules）。规则很简单：</p>
+<ol>
+<li><code>T&amp; &amp; =&gt; T&amp;</code></li>
+<li><code>T&amp;&amp; &amp; =&gt; T&amp;</code></li>
+<li><code>T&amp; &amp;&amp; =&gt; T&amp;</code></li>
+<li><code>T&amp;&amp; &amp;&amp; =&gt; T&amp;&amp;</code></li>
+</ol>
+<p>简单一点说，就是<strong>传进来的如果是左值引用那就是左值引用，如果是右值引用那就是右值引用</strong>。但是注意，这个合成规则用户是不允许使用的，只有编译器才能够使用这种合成规则。这就是为什么上面的通用引用当中有一条要求是类型必须可以自动推导。这个合成规则其实就是类型推倒的规则之一。</p>
+<p>这样，我们就可以知道为什么Scott Meyers在演讲中建议大家在通用引用的情境下，尽可能使用<code>forward()</code>了，因为这样可以在不改变语义的情况下提升性能。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">void doWork(T &amp;&amp; param) &#123;</span><br><span class="line">	// ops and expressions using std::forward&lt;T&gt;(param)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>C++0x通过引入许多新的语言特性来实现了语言性能的提升，使得本来就博大精深的一门语言变得更加的难以学习。但是一旦了解，就会被语言精妙的设计所折服。参考资料中给出了更多的关于左值、右值、左值引用、右值引用、移动语义和完美转发的例子。我自己实在是没有精力看完所有的这些资料了，各位有兴趣的话可以参阅。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a target="_blank" rel="noopener" href="http://thbecker.net/articles/rvalue_references/section_01.html#section_01">http://thbecker.net/articles/rvalue_references/section_01.html#section_01</a></li>
+<li><a target="_blank" rel="noopener" href="http://blog.csdn.net/pongba/article/details/1697636">http://blog.csdn.net/pongba/article/details/1697636</a></li>
+<li><a target="_blank" rel="noopener" href="http://channel9.msdn.com/Shows/Going+Deep/Cpp-and-Beyond-2012-Scott-Meyers-Universal-References-in-Cpp11">http://channel9.msdn.com/Shows/Going+Deep/Cpp-and-Beyond-2012-Scott-Meyers-Universal-References-in-Cpp11</a></li>
+<li><a target="_blank" rel="noopener" href="https://isocpp.org/blog/2012/11/universal-references-in-c11-scott-meyers">https://isocpp.org/blog/2012/11/universal-references-in-c11-scott-meyers</a></li>
+<li><a target="_blank" rel="noopener" href="https://onedrive.live.com/view.aspx?resid=F1B8FF18A2AEC5C5!1062">https://onedrive.live.com/view.aspx?resid=F1B8FF18A2AEC5C5!1062</a></li>
+</ol>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c++</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-数据库基础整理"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/05/29/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80%E6%95%B4%E7%90%86/"
+    >数据库基础整理</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/05/29/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80%E6%95%B4%E7%90%86/" class="article-date">
+  <time datetime="2021-05-29T03:10:58.000Z" itemprop="datePublished">2021-05-29</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="数据库和SQL"><a href="#数据库和SQL" class="headerlink" title="数据库和SQL"></a>数据库和SQL</h2><ol>
+<li><p>SQL语句及其种类</p>
+<ul>
+<li>DDL（Data Definition Language，数据定义语言） 用来创建或者删除存储数据用的数据库以及数据库中的表等对象。DDL 包含以下几种指令：<ul>
+<li>CREATE： 创建数据库和表等对象</li>
+<li>DROP： 删除数据库和表等对象</li>
+<li>ALTER： 修改数据库和表等对象的结构</li>
+</ul>
+</li>
+<li>DML（Data Manipulation Language，数据操纵语言） 用来查询或者变更表中的记录。DML 包含以下几种指令。<ul>
+<li>SELECT：查询表中的数据</li>
+<li>INSERT：向表中插入新数据</li>
+<li>UPDATE：更新表中的数据</li>
+<li>DELETE：删除表中的数据</li>
+</ul>
+</li>
+<li>DCL（Data Control Language，数据控制语言） 用来确认或者取消对数据库中的数据进行的变更。除此之外，还可以对RDBMS 的用户是否有权限操作数据库中的对象（数据库表等）进行设定。DCL 包含以下几种指令。<ul>
+<li>COMMIT： 确认对数据库中的数据进行的变更</li>
+<li>ROLLBACK： 取消对数据库中的数据进行的变更</li>
+<li>GRANT： 赋予用户操作权限</li>
+<li>REVOKE： 取消用户的操作权限</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>SQL的基本书写规则</p>
+<ul>
+<li>SQL 不区分关键字的大小写。表名和列名也是如此。但是插入到表中的数据是区分大小写的。</li>
+<li>字符串和日期常数需要使用单引号（’）括起来。</li>
+<li>单词之间需要使用半角空格或者换行符进行分隔（不可使用全角空格分隔）。</li>
+</ul>
+<ol>
+<li><p>创建数据库</p>
+<blockquote>
+<p>CREATE DATABASE &lt;数据库名称&gt;;  </p>
+</blockquote>
+</li>
+<li><p>创建表</p>
+<ul>
+<li><p>基本格式</p>
+<blockquote>
+<p>CREATE TABLE &lt;表名&gt; </br><br>（&lt;列名1&gt; &lt;数据类型&gt; &lt;该列所需约束&gt;,</br><br>&lt;列名2&gt; &lt;数据类型&gt; &lt;该列所需约束&gt;，</br><br>&lt;列名3&gt; &lt;数据类型&gt; &lt;该列所需约束&gt;，</br><br>&lt;列名4&gt; &lt;数据类型&gt; &lt;该列所需约束&gt;，</br><br>.. .</br><br>&lt;该表的约束1&gt;， &lt;该表的约束2&gt;，……);  </p>
+</blockquote>
+</li>
+<li><p>示例：</p>
+<blockquote>
+<p>CREATE TABLE Product </br><br>(product_id CHAR(4) NOT NULL,</br><br>product_name VARCHAR(100) NOT NULL,</br><br>product_type VARCHAR(32) NOT NULL,</br><br>sale_price INTEGER ,</br><br>purchase_price INTEGER ,</br><br>regist_date DATE ,</br><br>PRIMARY KEY (product_id));</br>  </p>
+</blockquote>
+</li>
+<li><p>命名规则</p>
+<ol>
+<li>数据库名称、表名和列名等可以使用以下三种字符。<ul>
+<li>半角英文字母</li>
+<li>半角数字</li>
+<li>下划线（_）</li>
+</ul>
+</li>
+<li>名称必须以半角英文字母作为开头</li>
+</ol>
+</li>
+<li><p>数据类型</p>
+<ol>
+<li>INTEGER型，用来指定存储整数的列的数据类型（数字型），不能存储小数</li>
+<li>CHAR型，CHARACTER（字符）的缩写，是用来指定存储字符串的列的数据类型（字符型）。可以像CHAR(10) 或者CHAR(200)这样，在括号中指定该列可以存储的字符串的长度（最大长度）。字符串超出最大长度的部分是无法输入到该列中的，字符串以 定长字符串 的形式存储在被指定为CHAR 型的列中。所谓定长字符串，就是当列中存储的字符串长度达不到最大长度的时候，使用半角空格进行补足。</li>
+<li>VARCHAR型，，VARCHAR 型也是用来指定存储字符串的列的数据类型（字符串类型），也可以通过括号内的数字来指定字符串的长度（最大长度）。但该类型的列是以 可变长字符串 的形式来保存字符串的。</li>
+</ol>
+</li>
+<li><p>约束的设置</p>
+<ol>
+<li>主键约束，所谓键，就是在指定特定数据时使用的列的组合。键种类多样，主键（primary key）就是可以特定一行数据的列B。也就是说，如果把product_id 列指定为主键，就可以通过该列取出特定的商品数据了。  </li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>表的删除和更新</p>
+<ul>
+<li><p>表删除 </p>
+<blockquote>
+<p>DROP TABLE &lt;表名&gt;；  </p>
+</blockquote>
+</li>
+<li><p>表定义的更新</p>
+<ul>
+<li><p>添加列的ALTER TABLE语句</p>
+<blockquote>
+<p>ALTER TABLE &lt;表名&gt; ADD COLUMN &lt;列的定义&gt;；  </p>
+</blockquote>
+<p>特定的SQL Oracle 和SQL Server 中不用写COLUMN。</br></p>
+<blockquote>
+<p> ALTER TABLE &lt;表名&gt; ADD &lt;列名&gt; ；  </p>
+</blockquote>
+<p>另外，在Oracle 中同时添加多列的时候，可以像下面这样使用括号。  </p>
+<blockquote>
+<p>ALTER TABLE &lt;表名&gt; ADD （&lt;列名&gt;，&lt;列名&gt;，……）；</p>
+</blockquote>
+</li>
+<li><p>删除列的ALTER TABLE语句</p>
+<blockquote>
+<p>ALTER TABLE &lt;表名&gt; DROP COLUMN &lt;列名&gt;；  </p>
+</blockquote>
+<p>特定的SQL Oracle 和SQL Server 中不用写COLUMN。</br></p>
+<blockquote>
+<p> ALTER TABLE &lt;表名&gt; DROP &lt;列名&gt; ；  </p>
+</blockquote>
+<p>另外，在Oracle 中同时添加多列的时候，可以像下面这样使用括号。  </p>
+<blockquote>
+<p>ALTER TABLE &lt;表名&gt; DROP （&lt;列名&gt;，&lt;列名&gt;，……）；  </p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="查询基础"><a href="#查询基础" class="headerlink" title="查询基础"></a>查询基础</h2><ol>
+<li><p>SELECT 基础  </p>
+<ul>
+<li><p>设定汉语别名时需要使用双引号（”）括起来    </p>
+<blockquote>
+<p>SELECT product_id AS “商品编号”,</br><br>product_name AS “商品名称”,</br><br>purchase_price AS “进货单价”</br><br>FROM Product;</p>
+</blockquote>
+</li>
+<li><p>SELECT 子句中不仅可以书写列名，还可以书写常数。</p>
+<blockquote>
+<p>SELECT ‘商品’ AS string, 38 AS number, ‘2009-02-24’ AS date,<br>product_id, product_name<br>FROM Product;  </p>
+</blockquote>
+</li>
+<li><p>想要删除重复行时，可以通过在SELECT 子句中使用 DISTINCT 来实现.</p>
+<blockquote>
+<p>SELECT DISTINCT product_type FROM Product;  </p>
+</blockquote>
+<p>在使用DISTINCT 时，NULL 也被视为一类数据。NULL 存在于多行中时，也会被合并为一条NULL 数据。</br><br>DISTINCT 也可以在多列之前使用。此时，会将多个列的数据进行组合，将重复的数据合并为一条</br><br><strong>DISTINCT 关键字只能用在第一个列名之前</strong></p>
+</li>
+<li><p>注释<br>1行注释：书写在“–”之后，只能写在同一行</br><br>多行注释： “*“，”*“</p>
+</li>
+</ul>
+</li>
+<li><p>算术运算符</p>
+<ul>
+<li><p>所有包含NULL 的计算，结果肯定是NULL。</p>
+</li>
+<li><p>比较运算符 =、&lt;&gt;、&gt;=、&gt;、&lt;=、&lt;</p>
+</li>
+<li><p>算术运算符 +、-、*、/</p>
+</li>
+<li><p>不能对NULL使用比较运算符（可以使用 IS NULL 运算符）</p>
+<blockquote>
+<p>SELECT product_name, purchase_price<br>FROM Product<br>WHERE purchase_price IS NULL;  </p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>逻辑运算符<br>NOT、AND、OR</p>
+</li>
+</ol>
+<h2 id="聚合与排序"><a href="#聚合与排序" class="headerlink" title="聚合与排序"></a>聚合与排序</h2><ol>
+<li><p>对表进行聚合查询</p>
+<ul>
+<li><p>聚合函数</p>
+<ul>
+<li>COUNT： 计算表中的记录数（行数）</li>
+<li>SUM： 计算表中数值列中数据的合计值</li>
+<li>AVG： 计算表中数值列中数据的平均值</li>
+<li>MAX： 求出表中任意列中数据的最大值</li>
+<li>MIN： 求出表中任意列中数据的最小值<br>示例：</li>
+</ul>
+<ol>
+<li>计算去除重复数据后的数据行数(想要计算值的种类时，可以在COUNT函数的参数中使用DISTINCT。)</li>
+</ol>
+<blockquote>
+<p>SELECT COUNT(DISTINCT product_type) FROM Product;  </p>
+</blockquote>
+</li>
+<li></li>
+</ul>
+</li>
+<li><p>对表进行分组（GROUP BY）   </p>
+<blockquote>
+<p>SELECT &lt;列名1&gt;, &lt;列名2&gt;, &lt;列名3&gt;, ……<br>FROM &lt;表名&gt;<br>GROUP BY &lt;列名1&gt;, &lt;列名2&gt;, &lt;列名3&gt;, ……;  </p>
+</blockquote>
+<p>示例：按照商品种类统计数据行数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_type, COUNT(*)</span><br><span class="line">FROM Product</span><br><span class="line">GROUP BY product_type;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">product_type | count</span><br><span class="line">--------------+------</span><br><span class="line">衣服 | 2</span><br><span class="line">办公用品 | 2</span><br><span class="line">厨房用具 | 4</span><br></pre></td></tr></table></figure>
+
+<p>GROUP BY 和WHERE 并用时SELECT 语句的执行顺序 FROM → WHERE → GROUP BY → SELECT<br>GROUP BY 使用注意事项： </p>
+<ul>
+<li><p>使用聚合函数时，SELECT 子句中只能存在以下三种元素：● 常数● 聚合函数● GROUP BY子句中指定的列名（也就是聚合键）。</p>
+<blockquote>
+<p>实际例子：select count(*), student_name from school group by gender 显然无法工作，count(*)和student_name数量不一致。</p>
+</blockquote>
+</li>
+<li><p>在GROUP BY 子句中不能使用列的别名<br>错误示例：</p>
+<blockquote>
+<p>SELECT product_type AS pt, COUNT(*) FROM Product GROUP BY pt;  </p>
+</blockquote>
+<p>上述语句发生错误的原因之前已经介绍过了，是SQL 语句在DBMS<br>内部的执行顺序造成的——SELECT 子句在GROUP BY 子句之后执行。<br>在执行GROUP BY 子句时，SELECT 子句中定义的别名，DBMS 还并<br>不知道。  </p>
+</li>
+<li><p>只有SELECT 子句和HAVING 子句（以及之后将要学到的ORDER BY 子句）中能够使用COUNT 等聚合函数,WHERE 子句中不能使用聚合函数。<br>例如： </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_type, COUNT(*)  FROM Product WHERE COUNT(*) = 2 GROUP BY product_type;</span><br></pre></td></tr></table></figure>
+
+<p>会报错:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR: 不能在WHERE子句中使用聚合 行 3: WHERE COUNT(*) = 2</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>为聚合结果指定条件（HAVING）–通过指定条件选取特定组的方法</p>
+<ul>
+<li><p>HAVING子句语法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT &lt;列名1&gt;, &lt;列名2&gt;, &lt;列名3&gt;, ……</span><br><span class="line">FROM &lt;表名&gt;</span><br><span class="line">GROUP BY &lt;列名1&gt;, &lt;列名2&gt;, &lt;列名3&gt;, ……</span><br><span class="line">HAVING &lt;分组结果对应的条件&gt;</span><br></pre></td></tr></table></figure>
+
+<p>HAVING 子句必须写在GROUP BY 子句之后，其在DBMS 内部的执行顺序也排在GROUP BY 子句之后。<br>使用HAVING 子句时SELECT 语句的顺序</p>
+<blockquote>
+<p>SELECT → FROM → WHERE → GROUP BY → HAVING  </p>
+</blockquote>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_type, COUNT(*) FROM Product GROUP BY product_type HAVING COUNT(*) = 2;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">product_type | count</span><br><span class="line">--------------+------</span><br><span class="line">衣服 | 2</span><br><span class="line">办公用品 | 2</span><br></pre></td></tr></table></figure></li>
+<li><p>HAVING 子句中能够使用的3 种要素如下所示。</p>
+<ul>
+<li>常数</li>
+<li>聚合函数</li>
+<li>GROUP BY子句中指定的列名（即聚合键）–此处既能用WHERE也能用GROUP BY，最好用WHERE</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>对查询结果进行排序（ORDER BY）</p>
+<ul>
+<li><p>ORDER BY 语法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT &lt;列名1&gt;, &lt;列名2&gt;, &lt;列名3&gt;, ……</span><br><span class="line">FROM &lt;表名&gt;</span><br><span class="line">ORDER BY &lt;排序基准列1&gt;, &lt;排序基准列2&gt;, ……</span><br></pre></td></tr></table></figure>
+
+<p>子句的书写顺序:</p>
+<blockquote>
+<p> 1.SELECT 子句 → 2. FROM 子句 → 3. WHERE 子句 → 4. GROUP BY 子句 → 5. HAVING 子句 → 6. ORDER BY 子句  </p>
+</blockquote>
+<p>降序排列时，在列名后面使用DESC 关键字。</p>
+</li>
+<li><p>使用含有NULL 的列作为排序键时，NULL 会在结果的开头或末尾汇总显示。</p>
+</li>
+<li><p>在ORDER BY 子句中却是允许使用别名。</p>
+</li>
+<li><p>ORDER BY 子句中也可以使用存在于表中、但并不包含在SELECT子句之中的列。例如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_name, sale_price, purchase_price</span><br><span class="line">    FROM Product</span><br><span class="line">ORDER BY product_id;</span><br></pre></td></tr></table></figure></li>
+<li><p>ORDER BY 可以使用聚合函数。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_type, COUNT(*)</span><br><span class="line">FROM Product</span><br><span class="line">GROUP BY product_type</span><br><span class="line">ORDER BY COUNT(*);</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h2 id="数据更新"><a href="#数据更新" class="headerlink" title="数据更新"></a>数据更新</h2><ol>
+<li><p>数据的插入</p>
+<ul>
+<li><p>INSERT 语法</p>
+<blockquote>
+<p>INSERT INTO &lt;表名&gt; (列1, 列2, 列3, ……) VALUES (值1, 值2, 值3, ……);   </p>
+</blockquote>
+<p>INSERT 语句中想给某一列赋予NULL 值时，可以直接在VALUES 子句的值清单中写入NULL。</p>
+</li>
+<li><p>插入默认值</p>
+<ul>
+<li><p>向表中插入默认值（初始值）<br>可以通过在创建表的 CREATE TABLE 语句中设置DEFAULT 约束来设定默认值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE ProductIns</span><br><span class="line">(product_id CHAR(4) NOT NULL,</span><br><span class="line">sale_price INTEGER DEFAULT 0, -- 销售单价的默认值设定为0;</span><br><span class="line">PRIMARY KEY (product_id));</span><br></pre></td></tr></table></figure></li>
+<li><p>通过显式方法插入默认值<br>在VALUES 子句中指定DEFAULT 关键字。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO ProductIns (product_id, product_name, product_type, </span><br><span class="line">sale_price, purchase_price, regist_date) VALUES (&#x27;0007&#x27;, </span><br><span class="line">&#x27;擦菜板&#x27;, &#x27;厨房用具&#x27;, DEFAULT, 790, &#x27;2009-04-28&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>这样一来，RDBMS 就会在插入记录时自动把默认值赋给对应的列。<br>我们可以使用SELECT 语句来确认通过INSERT 语句插入的数据行。</p>
+</li>
+<li><p>通过隐式方法插入默认值<br>插入默认值时也可以不使用DEFAULT 关键字，只要在列清单和VALUES 中省略设定了默认值的列就可以了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO ProductIns (product_id, product_name, product_type, </span><br><span class="line">purchase_price, regist_date) VALUES (&#x27;0007&#x27;,</span><br><span class="line">&#x27;擦菜板&#x27;, &#x27;厨房用具&#x27;, 790, &#x27;2009-04-28&#x27;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>从其他表中复制数据<br>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-- 将商品表中的数据复制到商品复制表中</span><br><span class="line">INSERT INTO ProductCopy (product_id, product_name, product_type, </span><br><span class="line">sale_price, purchase_price, regist_date)</span><br><span class="line">SELECT product_id, product_name, product_type, sale_price, </span><br><span class="line">purchase_price, regist_date</span><br><span class="line">FROM Product;</span><br></pre></td></tr></table></figure>
+
+<p>该INSERT 语句中的SELECT 语句，也可以使用WHERE 子句或者 GROUP BY 子句等。目前为止学到的各种SELECT 语句也都可以使用</p>
+</li>
+</ul>
+</li>
+<li><p>数据的删除</p>
+<ul>
+<li><p>删除数据的方法大概有以下两种：</p>
+<ol>
+<li> DROP TABLE 语句可以将表完全删除。</li>
+<li> DELETE 语句会留下表（容器），而删除表中的全部数据。</li>
+</ol>
+</li>
+<li><p>DELETE基本语法</p>
+<blockquote>
+<p>DELETE FROM &lt;表名&gt; WHERE &lt;条件&gt;;</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>数据的更新</p>
+<ul>
+<li><p>UPDATE基本语法： </p>
+<blockquote>
+<p>UPDATE &lt;表名&gt; SET &lt;列名&gt; = &lt;表达式&gt;;<br>UPDATE &lt;表名&gt; SET &lt;列名&gt; = &lt;表达式&gt; WHERE &lt;条件&gt;;  </p>
+</blockquote>
+</li>
+<li><p>使用UPDATE 也可以将列更新为NULL（该更新俗称为NULL 清空）。此时只需要将赋值表达式右边的值直接写为NULL 即可.</p>
+</li>
+</ul>
+</li>
+<li><p>事务</p>
+<ul>
+<li><p>在RDBMS 中，事务是对表中数据进行更新的单位。简单来讲，事务就是 需要在同一个处理单元中执行的一系列更新处理的集合。</p>
+</li>
+<li><p>语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">事务开始语句;</span><br><span class="line">DML语句①;</span><br><span class="line">DML语句②;</span><br><span class="line">DML语句③;</span><br><span class="line">.. .</span><br><span class="line">事务结束语句（COMMIT或者ROLLBACK）;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>SQL Server、PostgreSQL</p>
+<blockquote>
+<p>BEGIN TRANSACTION  </p>
+</blockquote>
+</li>
+<li><p>MySQL</p>
+<blockquote>
+<p>START TRANSACTION  </p>
+</blockquote>
+</li>
+<li><p>Oracle、DB2</p>
+<blockquote>
+<p>无  </p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>COMMMIT——提交处理</br><br>COMMIT 是提交事务包含的全部更新处理的结束指令，相当于文件处理中的覆盖保存。一旦提交，就无法恢复到事务开始前的状态了</p>
+</li>
+<li><p>ROLLBACK——取消处理</br><br>ROLLBACK 是取消事务包含的全部更新处理的结束指令，相当于文件处理中的放弃保存。一旦回滚，数据库就会恢复到事务开始之前的状态。</p>
+</li>
+<li><p>事务的特性<br>DBMS 的事务都遵循四种特性，将这四种特性的首字母结合起来统称为ACID 特性。</p>
+<ul>
+<li>原子性（Atomicity）<br>原子性是指在事务结束时，其中所包含的更新处理要么全部执行，要么完全不执行，也就是要么占有一切要么一无所有。</li>
+<li>一致性（Consistency）<br>一致性指的是事务中包含的处理要满足数据库提前设置的约束，如主键约束或者NOT NULL 约束等。</li>
+<li>隔离性（Isolation）<br>隔离性指的是保证不同事务之间互不干扰的特性。</li>
+<li>持久性（Durability）<br>持久性也可以称为耐久性，指的是在事务（不论是提交还是回滚）结束后，DBMS 能够保证该时间点的数据状态会被保存的特性。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="复杂查询"><a href="#复杂查询" class="headerlink" title="复杂查询"></a>复杂查询</h2><ol>
+<li><p>视图<br><strong>视图中的数据会随着原表的变化自动更新</strong></p>
+<ul>
+<li><p>视图的优点：</p>
+<ul>
+<li>由于视图无需保存数据，因此可以节省存储设备的容量；</li>
+<li>可以将频繁使用的SELECT 语句保存成视图，这样不用每次都重新书写了。</li>
+</ul>
+</li>
+<li><p>视图的语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE VIEW 视图名称(&lt;视图列名1&gt;, &lt;视图列名2&gt;, ……)</span><br><span class="line">AS</span><br><span class="line">&lt;SELECT语句&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>视图就是保存好的SELECT 语句。定义视图时可以使用任何SELECT 语句，既可以使用WHERE、GROUP BY、HAVING，也可以通过SELECT * 来指定全部列。但是,不能使用ORDER BY 子句。<br>如下示例中，使用ORDER BY子句定义出现错误</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-- 不能像这样定义视图</span><br><span class="line">CREATE VIEW ProductSum (product_type, cnt_product)</span><br><span class="line">AS</span><br><span class="line">SELECT product_type, COUNT(*)</span><br><span class="line">FROM Product</span><br><span class="line">GROUP BY product_type</span><br><span class="line">ORDER BY product_type;        以视图为基础创建视图定义视图时不能使用ORDER BY子句</span><br></pre></td></tr></table></figure></li>
+<li><p>视图的限制</p>
+<ul>
+<li>定义视图时不能使用ORDER BY子句 ，见上文；</li>
+<li>更新视图的限制<br>视图的更新在符合某些情况下可已进行（更新会同步到原表）<br>一些比较具有代表性的条件：<ul>
+<li>SELECT 子句中未使用DISTINCT</li>
+<li>FROM 子句中只有一张表</li>
+<li>未使用GROUP BY 子句</li>
+<li>未使用HAVING 子句</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>删除视图(DROP VIEW)<br>删除视图的语法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP VIEW 视图名称(&lt;视图列名1&gt;, &lt;视图列名2&gt;, ……)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>子查询   </p>
+<ul>
+<li><p>子查询就是一次性视图（SELECT语句）。与视图不同，子查询在SELECT语句执行完毕之后就会消失。</br><br>使用示例:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_type, cnt_product</span><br><span class="line">FROM (</span><br><span class="line">SELECT Product_type, COUNT(*) AS cnt_product</span><br><span class="line">FROM Product</span><br><span class="line">GROUP BY product_type</span><br><span class="line">) AS ProductSum;</span><br></pre></td></tr></table></figure></li>
+<li><p>由于子查询需要命名，因此需要根据处理内容来指定恰当的名称。<br>为子查询设定名称时需要使用AS关键字，该关键字有时也可以省略。其中也有像Oracle这样，在名称之前使用AS关键字就会发生错误的数据库。</p>
+</li>
+<li><p>标量子查询(限制：只能返回一行一列的结果，eg:10、’可以的’)</p>
+<ul>
+<li><p>由于返回的是单一的值，因此标量子查询的返回值可以用在= 或者&lt;&gt; 这样需要单一值的比较运算符之中。</p>
+</li>
+<li><p>场景示例1：<br>由于在WHERE子句中不能使用聚合函数，以下SQL语句是错误的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_id, product＿name, sale_price</span><br><span class="line">FROM Product</span><br><span class="line">WHERE sale_price &gt; AVG(sale_price);</span><br></pre></td></tr></table></figure>
+
+<p>使用标量子查询，实现方法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_id, product_name, sale_price</span><br><span class="line">FROM Product</span><br><span class="line">WHERE sale_price &gt; (SELECT AVG(sale_price)</span><br><span class="line">FROM Product);</span><br></pre></td></tr></table></figure></li>
+<li><p>场景示例2：<br>在SELECT子句中使用标量子查询</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_id,</span><br><span class="line">product_name,</span><br><span class="line">sale_price,</span><br><span class="line">(SELECT AVG(sale_price)</span><br><span class="line">FROM Product) AS avg_price</span><br><span class="line">FROM Product;</span><br></pre></td></tr></table></figure></li>
+<li><p>场景示例3：<br>在HAVING子句中使用标量子查询</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_type, AVG(sale_price)</span><br><span class="line">FROM Product</span><br><span class="line">GROUP BY product_type</span><br><span class="line">HAVING AVG(sale_price) &gt; (SELECT AVG(sale_price)</span><br><span class="line">FROM Product);</span><br></pre></td></tr></table></figure></li>
+<li><p>标量子查询的书写位置,不仅在WHERE 子句中，任何可以使用单一值的位置都可以使用。能够使用常数或者列名的地方，包括SELECT 子句、GROUP BY 子句、HAVING 子句、ORDER BY 子句，都可以使用。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>关联子查询</p>
+<ul>
+<li><p>关联子查询会在细分的组内进行比较时使用。</p>
+<ul>
+<li><p>使用示例1：<br>由于子查询的返回值不是单个标量，因此以下写法错误</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-- 发生错误的子查询</span><br><span class="line">SELECT product_id, product_name, sale_price</span><br><span class="line">FROM Product</span><br><span class="line">WHERE sale_price &gt; (SELECT AVG(sale_price)</span><br><span class="line">FROM Product</span><br><span class="line">GROUP BY product_type);</span><br></pre></td></tr></table></figure>
+
+<p>使用关联子查询方法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_type, product_name, sale_price</span><br><span class="line">    FROM Product AS P1 </span><br><span class="line">WHERE sale_price &gt; (SELECT AVG(sale_price)</span><br><span class="line">    FROM Product AS P2 </span><br><span class="line">    WHERE P1.product_type = P2.product_type</span><br><span class="line">    GROUP BY product_type);</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>关联子查询的结合条件一定要在子查询之中。</p>
+<ul>
+<li>原因：子查询内部设定的关联名称，只能在该子查询内部使用（“内部可以看到外部，而外部看不到内部”）。</li>
+<li>举例说明：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-- 错误的关联子查询书写方法</span><br><span class="line">SELECT product_type, product_name, sale_price</span><br><span class="line">FROM Product AS P1</span><br><span class="line">WHERE P1.product_type = P2.product_type</span><br><span class="line">AND sale_price &gt; (SELECT AVG(sale_price)</span><br><span class="line">FROM Product AS P2</span><br><span class="line">GROUP BY product_type);</span><br></pre></td></tr></table></figure>
+
+<p>此处，子查询执行结束时只会留下执行结果，作为抽出源的P2 表其实已经不存在了。因此，在执行外层查询时，由于P2表已经不存在了，因此就会返回“不存在使用该名称的表”这样的错误</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="函数、谓词、CASE表达式"><a href="#函数、谓词、CASE表达式" class="headerlink" title="函数、谓词、CASE表达式"></a>函数、谓词、CASE表达式</h2><ol>
+<li><p>函数</p>
+<ul>
+<li><p>函数分类</p>
+<ul>
+<li>算术函数（用来进行数值计算的函数）</li>
+<li>字符串函数（用来进行字符串操作的函数）</li>
+<li>日期函数（用来进行日期操作的函数）</li>
+<li>转换函数（用来转换数据类型和值的函数）</li>
+<li>聚合函数（用来进行数据聚合的函数）</li>
+</ul>
+</li>
+<li><p>算术函数</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ABS(数值)</td>
+<td>绝对值</td>
+</tr>
+<tr>
+<td>MOD(被除数，除数)</td>
+<td>求余</td>
+</tr>
+<tr>
+<td>ROUND(对象数值，保留小数的位数)</td>
+<td>四舍五入</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>字符串函数</p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>函数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>字符串拼接</td>
+<td>一般：字符串1||字符串2</br> MYSQL: CONCAT(str1, str2, str3)</td>
+</tr>
+<tr>
+<td>字符串长度</td>
+<td>LENGTH(字符串)</td>
+</tr>
+<tr>
+<td>字符串小写转换</td>
+<td>LOWER(字符串)</td>
+</tr>
+<tr>
+<td>字符串大写转换</td>
+<td>UPPER(字符串)</td>
+</tr>
+<tr>
+<td>字符串替换</td>
+<td>REPLACE(对象字符串，替换前的字符串，替换后的字符串)</td>
+</tr>
+<tr>
+<td>字符串截取</td>
+<td>SUBSTRING（对象字符串 FROM 截取的起始位置 FOR 截取的字符数）</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>日期函数</p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>函数</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>当前日期（SQL执行的日期）</td>
+<td>CURRENT_DATE</td>
+<td>SELECT CURRENT_DATE;</br>返回:2020-02-21</td>
+</tr>
+<tr>
+<td>当前时间</td>
+<td>CURRENT_TIME</td>
+<td>SELECT CURRENT_TIME;</br>返回：17:26:50.995+09</td>
+</tr>
+<tr>
+<td>当前日期和时间</td>
+<td>CURRENT_TIMESTAMP</td>
+<td>SELECT CURRENT_TIMESTAMP; </br>返回：2016-04-25 18:31:03.704+09</td>
+</tr>
+<tr>
+<td>截取日期元素</td>
+<td>EXTRACT(日期元素 FROM 日期）</br>日期元素包括：year、month、day、hour、minute、second</td>
+<td>SELECT EXTRACT(YEAR FROM CURRENT_TIMESTAMP) AS year；</br>返回： 2020</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>类型转换函数</p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>函数</th>
+<th>说明/示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型转换</td>
+<td>CAST（转换前的值 AS 想要转换的数据类型）</td>
+<td>将字符串类型转换成日期：</br>SELECT CAST(‘2020-2-21’ AS DATE) AS date_col;</br>返回：2020-2-21</td>
+</tr>
+<tr>
+<td>将NULL转换为其他值</td>
+<td>COALESCE(数据1，数据2，数据3……)</td>
+<td>返回可变参数中左侧开始第1 个不是NULL 的值。参数个数是可变的，因此可以根据需要无限增加。</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li><p>谓词</p>
+<ul>
+<li><p>谓词就是返回值为真值的函数: LIKE； BETWEEN； IS NULL、IS NOT NULL； IN；EXISTS</p>
+</li>
+<li><p>LIKE —— 字符串的部分一致性<br>% 是代表“0 字符以上的任意字符串”的特殊符号,例如：%abc、abc%、%abc%</p>
+</li>
+<li><p>BETWEEN —— 范围查询<br>使用示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_name, sale_price</span><br><span class="line">FROM Product</span><br><span class="line">WHERE sale_price BETWEEN 100 AND 1000;</span><br></pre></td></tr></table></figure></li>
+<li><p>IS NULL、IS NOT NULL —— 判断是否为NULL<br>使用示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_name, purchase_price</span><br><span class="line">FROM Product</span><br><span class="line">WHERE purchase_price IS NOT NULL;</span><br></pre></td></tr></table></figure></li>
+<li><p>IN、NOT IN —— OR有时的替代用法<br>使用示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_name, purchase_price</span><br><span class="line">FROM Product</span><br><span class="line">WHERE purchase_price NOT IN (320, 500, 5000);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_name, sale_price</span><br><span class="line">FROM Product</span><br><span class="line">WHERE product_id IN (SELECT product_id</span><br><span class="line">FROM ShopProduct</span><br><span class="line">WHERE shop_id = &#x27;000C&#x27;);</span><br></pre></td></tr></table></figure></li>
+<li><p>EXIST —— 判断是否存在满足某种条件的记录<br>使用示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_name, sale_price</span><br><span class="line">    FROM Product AS P </span><br><span class="line">WHERE EXISTS (SELECT *</span><br><span class="line">    FROM ShopProduct AS SP </span><br><span class="line">    WHERE SP.shop_id = &#x27;000C&#x27;</span><br><span class="line">    AND SP.product_id = P.product_id);</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>CASE表达式</p>
+<ol>
+<li><p>搜索CASE表达式</p>
+<ul>
+<li><p>搜索CASE表达式语法</br><br>CASE表达式会从对最初的WHEN子句中的“&lt; 求值表达式&gt;”进行求值开始执行如果结果<br>为真（TRUE），那么就返回THEN 子句中的表达式，CASE 表达式的执行到此为止。如果结果不为真，那么就跳转到下一条WHEN 子句的求值之中。如果直到最后的WHEN 子句为止返回结果都不为真，那么就会返回ELSE中的表达式，执行终止。</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CASE    WHEN &lt;求值表达式&gt; THEN &lt;表达式&gt;</span><br><span class="line">        WHEN &lt;求值表达式&gt; THEN &lt;表达式&gt;</span><br><span class="line">        WHEN &lt;求值表达式&gt; THEN &lt;表达式&gt;</span><br><span class="line">        .. .</span><br><span class="line">        ELSE &lt;表达式&gt;</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
+
+<p>  使用示例：</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_name,</span><br><span class="line">CASE WHEN product_type = &#x27;衣服&#x27;</span><br><span class="line">THEN &#x27;A ：&#x27; | | product_type</span><br><span class="line">WHEN product_type = &#x27;办公用品&#x27;</span><br><span class="line">THEN &#x27;B ：&#x27; | | product_type</span><br><span class="line">WHEN product_type = &#x27;厨房用具&#x27;</span><br><span class="line">THEN &#x27;C ：&#x27; | | product_type</span><br><span class="line">ELSE NULL</span><br><span class="line">END AS abc_product_type</span><br><span class="line">FROM Product;</span><br></pre></td></tr></table></figure></li>
+<li><p>ELSE 子句如果省略不写，会被默认为ELSE NULL。</p>
+</li>
+<li><p>CASE 表达式最后的“END”不可省略。</p>
+</li>
+</ul>
+</li>
+<li><p>简单CASE表达式</br><br>简单CASE表达式比搜索CASE表达式简单，但是会受到条件的约束，因此通常情况下都会使用搜索CASE 表达式。</p>
+<ul>
+<li><p>简单CASE表达式语法</br></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CASE &lt;表达式&gt;</span><br><span class="line">    WHEN &lt;表达式&gt; THEN &lt;表达式&gt;</span><br><span class="line">    WHEN &lt;表达式&gt; THEN &lt;表达式&gt;</span><br><span class="line">    WHEN &lt;表达式&gt; THEN &lt;表达式&gt;</span><br><span class="line">    .. .</span><br><span class="line">    ELSE &lt;表达式&gt;</span><br><span class="line">END</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_name,</span><br><span class="line">CASE product_type</span><br><span class="line">    WHEN &#x27;衣服&#x27; THEN &#x27;A ：&#x27; | | product_type</span><br><span class="line">    WHEN &#x27;办公用品&#x27; THEN &#x27;B ：&#x27; | | product_type</span><br><span class="line">    WHEN &#x27;厨房用具&#x27; THEN &#x27;C ：&#x27; | | product_type</span><br><span class="line">    ELSE NULL</span><br><span class="line">    END AS abc_product_type</span><br><span class="line">FROM Product;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="集合运算"><a href="#集合运算" class="headerlink" title="集合运算"></a>集合运算</h2><p>集合：指的是记录的集合。具体来说，表、视图和查询的执行结果都是记录的集合。</p>
+<h3 id="交并差集运算"><a href="#交并差集运算" class="headerlink" title="交并差集运算"></a>交并差集运算</h3><pre><code>注意事项：
+1. 作为运算对象的记录的列数、每一列的类型必须相同
+2. ORDER BY子句只能在最后使用一次
+</code></pre>
+<ol>
+<li><p>UNION ———— 并集</p>
+<ul>
+<li><p>基本语法示例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_id, product_name</span><br><span class="line">FROM Product</span><br><span class="line">UNION</span><br><span class="line">SELECT product_id, product_name</span><br><span class="line">FROM Product2;</span><br></pre></td></tr></table></figure></li>
+<li><p>保留重复行<br>在UNION 后面添加ALL 关键字。</p>
+</li>
+</ul>
+</li>
+<li><p>INTERSECT ———— 交集<br>选取两个记录集合中公共部分</p>
+<ul>
+<li><p>基本语法示例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Oracle SQL Server DB2 PostgreSQL</span><br><span class="line">SELECT product_id, product_name</span><br><span class="line">FROM Product</span><br><span class="line">INTERSECT</span><br><span class="line">SELECT product_id, product_name</span><br><span class="line">FROM Product2</span><br><span class="line">ORDER BY product_id;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>EXCEPT ———— 差集 (ORACLE中关键词为MINUS)</p>
+<ul>
+<li><p>基本语法  </p>
+<ul>
+<li><p>一般数据库示例：<br>结果为Product 表中记录除去Product2表中记录之后的剩余部分。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_id, product_name</span><br><span class="line">FROM Product</span><br><span class="line">EXCEPT</span><br><span class="line">SELECT product_id, product_name</span><br><span class="line">FROM Product2</span><br><span class="line">ORDER BY product_id;</span><br></pre></td></tr></table></figure></li>
+<li><p>oracle示例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT …</span><br><span class="line">FROM …</span><br><span class="line">MINUS</span><br><span class="line">SELECT …</span><br><span class="line">FROM …;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="联结"><a href="#联结" class="headerlink" title="联结"></a>联结</h3><p>联结（JOIN）就是将其他表中的列添加过来，进行“添加列”的集合运算。UNION是以行（纵向）为单位进行操作，而联结则是以列（横向）为单位进行的。所谓联结运算，一言以蔽之，就是“以A中的列作为桥梁，将B中满足同样条件的列汇集到同一结果之中”。</p>
+<ol>
+<li><p>INNER JOIN ———— 内联结</p>
+<ul>
+<li>基本语法示例1：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT SP.shop_id, SP.shop_name, SP.product_id, P.product_name, </span><br><span class="line">P.sale_price</span><br><span class="line">FROM ShopProduct AS SP INNER JOIN Product AS P </span><br><span class="line">ON SP.product_id = P.product_id</span><br><span class="line">WHERE SP.shop_id = &#x27;000A&#x27;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>FROM子句包含多张表，使用关键字INNER JOIN 将两表联结，别名SP 、P非必需。</li>
+<li>在ON 之后指定两张表联结所使用的列（联结键）（product_id）。ON 是专门用来指定联结条件的，它能起到与WHERE 相同的作用。需要指定多个键时，同样可<br>以使用AND、OR。<strong>在进行内联结时ON 子句是必不可少的</strong>（如果没有ON会发生错误），并且ON 必须书写在FROM 和WHERE 之间。</li>
+</ul>
+</li>
+<li><p>OUTER JOIN ———— 外联结<br>用法与INNER JOIN相同，区别在于：内联结的结果只包含多张表都有的数据，外联结的结果包含主表的所有数据。（显然，外联结的结果数&gt;=内联结的结果数）</p>
+<ul>
+<li><p>外联结指定主表的关键字是LEFT 和RIGHT。，使用LEFT 时FROM子句中写在左侧的表是主表，使用RIGHT时右侧的表是主表。<br>下面两个语句，结果相同：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- 右侧的表，也就是Product 表是主表</span><br><span class="line">SELECT SP.shop_id, SP.shop_name, SP.product_id, P.product_name, </span><br><span class="line">P.sale_price</span><br><span class="line">FROM ShopProduct AS SP RIGHT OUTER JOIN Product AS P</span><br><span class="line">ON SP.product_id = P.product_id;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- 左侧的表，也就是Product表是主表</span><br><span class="line">SELECT SP.shop_id, SP.shop_name, SP.product_id, P.product_name, </span><br><span class="line">P.sale_price</span><br><span class="line">FROM Product AS P LEFT OUTER JOIN ShopProduct AS SP ①</span><br><span class="line">ON SP.product_id = P.product_id;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>两表以上联结<br>示例代码：</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT SP.shop_id, SP.shop_name, SP.product_id, P.product_name, </span><br><span class="line">P.sale_price</span><br><span class="line">FROM ShopProduct AS SP INNER JOIN Product AS P</span><br><span class="line">ON SP.product_id = P.product_id</span><br><span class="line">INNER JOIN InventoryProduct AS IP</span><br><span class="line">ON SP.product_id = IP.product_id</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="窗口函数-OLAP-函数"><a href="#窗口函数-OLAP-函数" class="headerlink" title="窗口函数(OLAP 函数)"></a>窗口函数(OLAP 函数)</h2><p>OLAP 是OnLine Analytical Processing 的简称，意思是对数据库数据进行实时分析处理。</p>
+<ul>
+<li><p>窗口函数基本语法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;窗口函数&gt; OVER ([PARTITION BY &lt;列清单&gt;]</span><br><span class="line">ORDER BY &lt;排序用列清单&gt;)</span><br></pre></td></tr></table></figure></li>
+<li><p>窗口函数包括：</p>
+<ul>
+<li>所有的聚合函数都能用作窗口函数，其语法和专用窗口函数相同（SUM、AVG、COUNT、MAX、MIN）；</li>
+<li>RANK、DENSE_RANK、ROW_NUMBER 等专用窗口函数</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><p>RUANK函数 ———— 记录排序  </p>
+<ul>
+<li><p>PARTITION BY 设定排序的对象范围。</p>
+</li>
+<li><p>ORDER BY 指定按照哪一列、何种顺序进行排序。</p>
+</li>
+<li><p>使用示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_name, product_type, sale_price,</span><br><span class="line">RANK () OVER (PARTITION BY product_type</span><br><span class="line">ORDER BY sale_price) AS ranking</span><br><span class="line">FROM Product;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">product_name | product_type | sale_price | ranking</span><br><span class="line">------------+--------------+-------------+--------</span><br><span class="line">叉子 | 厨房用具 | 500 | 1</span><br><span class="line">擦菜板 | 厨房用具 | 880 | 2</span><br><span class="line">菜刀 | 厨房用具 | 3000 | 3</span><br><span class="line">高压锅 | 厨房用具 | 6800 | 4</span><br><span class="line">T恤衫 | 衣服 | 1000 | 1</span><br><span class="line">运动T恤 | 衣服 | 4000 | 2</span><br><span class="line">圆珠笔 | 办公用品 | 100 | 1</span><br><span class="line">打孔器 | 办公用品 | 500 | 2</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>SUM 函数作为窗口函数</p>
+<ul>
+<li><p>使用示例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT product_id, product_name, sale_price,</span><br><span class="line">　SUM (sale_price) OVER (ORDER BY product_id) AS current_sum</span><br><span class="line">FROM Product;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">product_id | product_name | sale_price | current_sum</span><br><span class="line">----------+-----------+-------------+------------</span><br><span class="line">0001 | T恤衫 | 1000 | 1000 ←1000</span><br><span class="line">0002 | 打孔器 | 500 | 1500 ←1000+500</span><br><span class="line">0003 | 运动T恤 | 4000 | 5500 ←1000+500+4000</span><br><span class="line">0004 | 菜刀 | 3000 | 8500 ←1000+500+4000+3000</span><br><span class="line">0005 | 高压锅 | 6800 | 15300</span><br><span class="line">0006 | 叉子 | 500 | 15800</span><br><span class="line">0007 | 擦菜板 | 880 | 16680</span><br><span class="line">0008 | 圆珠笔 | 100 | 16780</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>计算移动平均</p>
+<ul>
+<li>使用示例</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">--指定“最靠近的3行”作为汇总对象</span><br><span class="line">SELECT product_id, product_name, sale_price,</span><br><span class="line">AVG (sale_price) OVER (ORDER BY product_id</span><br><span class="line">ROWS 2 PRECEDING) AS moving_avg</span><br><span class="line">FROM Product;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">product_id product_name sale_price moving_avg</span><br><span class="line">----------- ------------- ------------- ------------</span><br><span class="line">0001 T恤衫 1000 1000 ←(1000)/1</span><br><span class="line">0002 打孔器 500 750 ←(1000+500)/2</span><br><span class="line">0003 运动T恤 4000 1833 ←(1000+500+4000)/3</span><br><span class="line">0004 菜刀 3000 2500 ←(500+4000+3000)/3</span><br><span class="line">0005 高压锅 6800 4600 ←(4000+3000+6800)/3</span><br><span class="line">0006 叉子 500 3433</span><br><span class="line">0007 擦菜板 880 2726</span><br><span class="line">0008 圆珠笔 100 493</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="GROUPING运算符"><a href="#GROUPING运算符" class="headerlink" title="GROUPING运算符"></a>GROUPING运算符</h2><p>用于小计、合计，不常用</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+  </article>
+  
+
+  
+</section>
+</div>
+
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2021
+        <i class="ri-heart-fill heart_icon"></i> 王涛
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        
+        由 <a href="https://hexo.io" target="_blank">Hexo</a> 强力驱动
+        <span class="division">|</span>
+        主题 - <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+        <script type="text/javascript" src='https://s9.cnzz.com/z_stat.php?id=1278069914&amp;web_id=1278069914'></script>
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/ayer-side.svg" alt="厚积薄发"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" target="_blank" rel="noopener" href="https://uniu94.lofter.com/">摄影</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    <div id="music">
+    
+    
+    
+    <iframe frameborder="no" border="1" marginwidth="0" marginheight="0" width="200" height="86"
+        src="//music.163.com/outchain/player?type=2&id=304905&auto=0&height=66"></iframe>
+</div>
+
+<style>
+    #music {
+        position: fixed;
+        right: 15px;
+        bottom: 0;
+        z-index: 998;
+    }
+</style>
+    
+  </div>
+</body>
+
+</html>
