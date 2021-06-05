@@ -141,6 +141,193 @@
     
     
     <article
+  id="post-僵尸进程及其处理方法"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/06/05/%E5%83%B5%E5%B0%B8%E8%BF%9B%E7%A8%8B%E5%8F%8A%E5%85%B6%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95/"
+    >僵尸进程及其处理方法</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/06/05/%E5%83%B5%E5%B0%B8%E8%BF%9B%E7%A8%8B%E5%8F%8A%E5%85%B6%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2021-06-05T01:28:36.000Z" itemprop="datePublished">2021-06-05</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/c/">c++</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><strong>什么是僵尸进程</strong>？</p>
+<p>首先内核会释放终止进程(调用了exit系统调用)所使用的所有存储区，关闭所有打开的文件等，但内核为每一个终止子进程保存了一定量的信息。这些信息至少包括进程ID，进程的终止状态，以及该进程使用的CPU时间，所以当终止子进程的父进程调用wait或waitpid时就可以得到这些信息。</p>
+<p>而僵尸进程就是指：一个进程执行了exit系统调用退出，而其父进程并没有为它收尸(调用wait或waitpid来获得它的结束状态)的进程。</p>
+<p>任何一个子进程(init除外)在exit后并非马上就消失，而是留下一个称外僵尸进程的数据结构，等待父进程处理。这是每个子进程都必需经历的阶段。另外子进程退出的时候会向其父进程发送一个SIGCHLD信号。</p>
+<p><strong>僵尸进程的目的？</strong></p>
+<p>设置僵死状态的目的是维护子进程的信息，以便父进程在以后某个时候获取。这些信息至少包括进程ID，进程的终止状态，以及该进程使用的CPU时间，所以当终止子进程的父进程调用wait或waitpid时就可以得到这些信息。如果一个进程终止，而该进程有子进程处于僵尸状态，那么它的所有僵尸子进程的父进程ID将被重置为1（init进程）。继承这些子进程的init进程将清理它们（也就是说init进程将wait它们，从而去除它们的僵尸状态）。</p>
+<p><strong>如何避免僵尸进程？</strong></p>
+<ol>
+<li>通过signal(SIGCHLD, SIG_IGN)通知内核对子进程的结束不关心，由内核回收。如果<strong>不想让父进程挂起</strong>，可以在父进程中加入一条语句：signal(SIGCHLD,SIG_IGN);表示父进程忽略SIGCHLD信号，该信号是子进程退出的时候向父进程发送的。</li>
+<li>父进程调用wait/waitpid等函数等待子进程结束，如果尚无子进程退出<strong>wait会导致父进程阻塞</strong>。<strong>waitpid可以通过传递WNOHANG使父进程不阻塞立即返回</strong>。</li>
+<li>如果父进程很忙可以用signal注册信号处理函数，在信号处理函数调用wait/waitpid等待子进程退出。</li>
+<li>通过两次调用fork。父进程首先调用fork创建一个子进程然后waitpid等待子进程退出，子进程再fork一个孙进程后退出。这样子进程退出后会被父进程等待回收，而对于孙子进程其父进程已经退出所以孙进程成为一个孤儿进程，孤儿进程由init进程接管，孙进程结束后，init会等待回收。</li>
+</ol>
+<p>第一种方法忽略SIGCHLD信号，这常用于并发服务器的性能的一个技巧因为并发服务器常常fork很多子进程，子进程终结之后需要服务器进程去wait清理资源。如果将此信号的处理方式设为忽略，可让内核把僵尸子进程转交给init进程去处理，省去了大量僵尸进程占用系统资源。</p>
+<p><strong>僵尸进程处理办法</strong></p>
+<h3 id="1-wait-函数"><a href="#1-wait-函数" class="headerlink" title="1 wait()函数"></a>1 wait()函数</h3><p>#include &lt;sys/types.h&gt;<br>#include &lt;sys/wait.h&gt;</p>
+<p>pid_t wait(int *status);</p>
+<p><strong>进程一旦调用了wait，就立即阻塞自己</strong>，由wait自动分析是否当前进程的某个子进程已经退出，如果让它找到了这样一个已经变成僵尸的子进程，wait就会收集这个子进程的信息，并把它彻底销毁后返回；如果没有找到这样一个子进程，wait就会一直阻塞在这里，直到有一个出现为止。<br>参数status用来保存被收集进程退出时的一些状态，它是一个指向int类型的指针。但如果我们对这个子进程是如何死掉的毫不在意，只想把这个僵尸进程消灭掉，（事实上绝大多数情况下，我们都会这样想），我们就可以设定这个参数为NULL，就象下面这样：</p>
+<p> pid = wait(NULL);</p>
+<p>如果成功，wait会返回被收集的子进程的进程ID，如果调用进程没有子进程，调用就会失败，此时wait返回-1，同时errno被置为ECHILD。</p>
+<ul>
+<li>wait系统调用会使父进程暂停执行，直到它的一个子进程结束为止。</li>
+<li>返回的是子进程的PID，它通常是结束的子进程</li>
+<li>状态信息允许父进程判定子进程的退出状态，即从子进程的main函数返回的值或子进程中exit语句的退出码。</li>
+<li>如果status不是一个空指针，状态信息将被写入它指向的位置</li>
+</ul>
+<p>可以上述的一些宏判断子进程的退出情况：</p>
+<p><a target="_blank" rel="noopener" href="https://images0.cnblogs.com/blog/529981/201307/13113019-64f7b2b6adeb4402aac7f3cc5c079f0c.png"><img src="https://images0.cnblogs.com/blog/529981/201307/13113019-6a9fe47185da4a35a138df11ac942ae7.png" alt="QQ截图20130713110230"></a></p>
+<h3 id="2-waitpid-函数"><a href="#2-waitpid-函数" class="headerlink" title="2 waitpid()函数"></a>2 waitpid()函数</h3><p>#include &lt;sys/types.h&gt;<br>#include &lt;sys/wait.h&gt;</p>
+<p>pid_t waitpid(pid_t pid, int *status, int options);</p>
+<p>参数:</p>
+<p>status:如果不是空，会把状态信息写到它指向的位置，与wait一样</p>
+<p>options：允许改变waitpid的行为，最有用的一个选项是WNOHANG,它的作用是防止waitpid把调用者的执行挂起</p>
+<p>The value of options is an OR of zero or more of the following con-<br>stants:</p>
+<p>WNOHANG   return immediately if no child has exited.</p>
+<p>WUNTRACED  also return if a child has stopped (but not traced via<br>      ptrace(2)). Status for traced children which have stopped<br>      is provided even if this option is not specified.</p>
+<p>WCONTINUED (since Linux 2.6.10)<br>      also return if a stopped child has been resumed by delivery<br>      of SIGCONT.</p>
+<p>返回值：如果成功返回等待子进程的ID，失败返回-1</p>
+<h4 id="对于waitpid的p-i-d参数的解释与其值有关："><a href="#对于waitpid的p-i-d参数的解释与其值有关：" class="headerlink" title="对于waitpid的p i d参数的解释与其值有关："></a>对于waitpid的p i d参数的解释与其值有关：</h4><p>pid == -1 等待任一子进程。于是在这一功能方面waitpid与wait等效。</p>
+<p>pid &gt; 0 等待其进程I D与p i d相等的子进程。</p>
+<p>pid == 0 等待其组I D等于调用进程的组I D的任一子进程。换句话说是与调用者进程同在一个组的进程。</p>
+<p>pid &lt; -1 等待其组I D等于p i d的绝对值的任一子进程</p>
+<h4 id="wait与waitpid区别："><a href="#wait与waitpid区别：" class="headerlink" title="wait与waitpid区别："></a>wait与waitpid区别：</h4><ul>
+<li>在一个子进程终止前， wait 使其调用者阻塞，而waitpid 有一选择项，可使调用者不阻塞。</li>
+<li>waitpid并不等待第一个终止的子进程—它有若干个选择项，可以控制它所等待的特定进程。</li>
+<li>实际上wait函数是waitpid函数的一个特例。waitpid(-1, &amp;status, 0);</li>
+</ul>
+<p>示例：</p>
+<p>如以下代码会创建100个子进程，但是父进程并未等待它们结束，所以在父进程退出前会有100个僵尸进程。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;  </span><br><span class="line">#include &lt;unistd.h&gt;  </span><br><span class="line">   </span><br><span class="line">int main() &#123;  </span><br><span class="line">   </span><br><span class="line">  int i;  </span><br><span class="line">  pid_t pid;  </span><br><span class="line">   </span><br><span class="line">  for(i=0; i&lt;100; i++) &#123;  </span><br><span class="line">    pid = fork();  </span><br><span class="line">    if(pid == 0)  </span><br><span class="line">      break;  </span><br><span class="line">  &#125;  </span><br><span class="line">   </span><br><span class="line">  if(pid&gt;0) &#123;  </span><br><span class="line">    printf(&quot;press Enter to exit...&quot;);  </span><br><span class="line">    getchar();  </span><br><span class="line">  &#125;  </span><br><span class="line">   </span><br><span class="line">  return 0;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<p>其中一个解决方法即是编写一个SIGCHLD信号处理程序来调用wait/waitpid来等待子进程返回。 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;  </span><br><span class="line">#include &lt;unistd.h&gt;  </span><br><span class="line">#include &lt;signal.h&gt;  </span><br><span class="line">#include &lt;sys/types.h&gt;  </span><br><span class="line">#include &lt;sys/wait.h&gt;  </span><br><span class="line">   </span><br><span class="line">void wait4children(int signo) &#123;  </span><br><span class="line">   </span><br><span class="line">  int status;  </span><br><span class="line">  wait(&amp;status);  </span><br><span class="line">   </span><br><span class="line">&#125;  </span><br><span class="line">   </span><br><span class="line">int main() &#123;  </span><br><span class="line">   </span><br><span class="line">  int i;  </span><br><span class="line">  pid_t pid;  </span><br><span class="line">   </span><br><span class="line">  signal(SIGCHLD, wait4children);  </span><br><span class="line">   </span><br><span class="line">  for(i=0; i&lt;100; i++) &#123;  </span><br><span class="line">    pid = fork();  </span><br><span class="line">    if(pid == 0)  </span><br><span class="line">      break;  </span><br><span class="line">  &#125;  </span><br><span class="line">   </span><br><span class="line">  if(pid&gt;0) &#123;  </span><br><span class="line">    printf(&quot;press Enter to exit...&quot;);  </span><br><span class="line">    getchar();  </span><br><span class="line">  &#125;  </span><br><span class="line">   </span><br><span class="line">  return 0;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<p>但是通过运行程序发现还是会有僵尸进程，而且每次僵尸进程的数量都不定。这是为什么呢？其实主要是因为<strong>Linux的信号机制是不排队的</strong>，假如在某一时间段多个子进程退出后都会发出SIGCHLD信号，但父进程来不及一个一个地响应，所以最后父进程实际上只执行了一次信号处理函数。但执行一次信号处理函数只等待一个子进程退出，所以最后会有一些子进程依然是僵尸进程。（我的修改：linux的信号分为可靠信号和不可靠信号，主要区别在于，不可靠信号的相同信号会合并为一条，比如发送了5个kill -2 实际上只有2个，所以导致了一些问题。）</p>
+<p>虽然这样但是有一点是明了的，就是收到SIGCHLD必然有子进程退出，而我们可以在信号处理函数里循环调用waitpid函数来等待所有的退出的子进程。至于为什么不用wait，主要原因是在wait在清理完所有僵尸进程后再次等待会阻塞。</p>
+<p>所以最佳方案如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;  </span><br><span class="line">#include &lt;unistd.h&gt;  </span><br><span class="line">#include &lt;signal.h&gt;  </span><br><span class="line">#include &lt;errno.h&gt;  </span><br><span class="line">#include &lt;sys/types.h&gt;  </span><br><span class="line">#include &lt;sys/wait.h&gt;  </span><br><span class="line">   </span><br><span class="line">void wait4children(int signo) &#123;  </span><br><span class="line">  int status;  </span><br><span class="line">  while(waitpid(-1, &amp;status, WNOHANG) &gt; 0);  </span><br><span class="line">&#125;  </span><br><span class="line">   </span><br><span class="line">int main() &#123;  </span><br><span class="line">   </span><br><span class="line">  int i;  </span><br><span class="line">  pid_t pid;  </span><br><span class="line">   </span><br><span class="line">  signal(SIGCHLD, wait4children);  </span><br><span class="line">   </span><br><span class="line">  for(i=0; i&lt;100; i++) &#123;  </span><br><span class="line">    pid = fork();  </span><br><span class="line">    if(pid == 0)  </span><br><span class="line">      break;  </span><br><span class="line">  &#125;  </span><br><span class="line">   </span><br><span class="line">  if(pid&gt;0) &#123;  </span><br><span class="line">    printf(&quot;press Enter to exit...&quot;);  </span><br><span class="line">    getchar();  </span><br><span class="line">  &#125;  </span><br><span class="line">   </span><br><span class="line">  return 0;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<p>这里使用waitpid而不是使用wait的原因在于：我们在一个循环内调用waitpid，以获取所有已终止子进程的状态。我们必须指定WNOHANG选项，它告诉waitpid在有尚未终止的子进程在运行时不要阻塞。我们不能在循环内调用wait，因为没有办法防止wait在正运行的子进程尚有未终止时阻塞。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" rel="tag">计算机系统</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-虚拟内存与物理内存"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/06/05/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E4%B8%8E%E7%89%A9%E7%90%86%E5%86%85%E5%AD%98/"
+    >虚拟内存与物理内存</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/06/05/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E4%B8%8E%E7%89%A9%E7%90%86%E5%86%85%E5%AD%98/" class="article-date">
+  <time datetime="2021-06-05T01:26:15.000Z" itemprop="datePublished">2021-06-05</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">计算机系统</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p>计算机组成原理目录：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/binarylei/p/12585607.html">https://www.cnblogs.com/binarylei/p/12585607.html</a>**</p>
+<p>程序运行时，指令和数据都需要先加载到内存里面，才会被 CPU 拿去执行。那程序中的虚拟地址最终是如何映射到内存中的物理地址呢？从简单页表，到多级页表，再到 TLB，都解决了那些问题？</p>
+<ol>
+<li><strong>简单页表</strong>：类似数组，时间复杂度为 O(1)。但空间复杂度为数组的长度，即页的个数。32 位的内存地址为 4MB（= 2^20 * 4byte）。</li>
+<li><strong>多级页表</strong>：类似 B+ 树，时间复杂度为 O(n)，如 4 级页表就需要查询 4 次。但程序只需要存储正在使用的虚拟页的映射关系，空间复杂度大大降低。</li>
+<li><strong>TLB</strong>：使用缓存保存之前虚拟页的映射关系。因为指令和数据往往都是连续的，存在空间局部性和时间局部性。也就是说，连续执行的多个指令和数据往往在同一个虚拟页中，没必要每次都从内存中读取页表来解析虚拟地址。</li>
+</ol>
+<h2 id="1-虚拟地址和物理地址"><a href="#1-虚拟地址和物理地址" class="headerlink" title="1. 虚拟地址和物理地址"></a>1. 虚拟地址和物理地址</h2><p>另外，学习本节时可以将下面两个知识点对比学习。</p>
+<ol>
+<li>内存地址映射：虚拟地址是如何映射到物理地址？</li>
+<li>高速缓存映射：内存地址是如何映射到 CPU Cache？</li>
+</ol>
+<p>程序在编译时不可能知道装载后的物理内存地址，实际上，程序编译生成的地址都是虚拟地址。在我们日常使用的 Linux 或者 Windows 操作系统下，程序并不能直接访问物理内存。为了解决这个问题，当程序装载后，会通过虚拟地址映射到真实的物理地址。</p>
+<p><strong>图1：虚拟地址和物理地址映射</strong></p>
+<p><img src="https://static001.geekbang.org/resource/image/0c/f0/0cf2f08e1ceda473df71189334857cf0.png" alt="img"></p>
+<p>内存被分成固定大小的<strong>页(Page)<strong>，然后再通过</strong>虚拟内存地址(Virtual Address)</strong> 到<strong>物理内存地址(Physical Address)</strong> 的**地址转换(Address Translation)**，才能访问实际存放数据的物理内存位置。而我们的程序看到的内存地址，都是虚拟内存地址。</p>
+<p>这些虚拟内存地址究竟是怎么转换成物理内存地址的呢？这一讲里，我们就来看一看。</p>
+<h2 id="2-简单页表"><a href="#2-简单页表" class="headerlink" title="2. 简单页表"></a>2. 简单页表</h2><p>**页表(Page Table)**：想要把虚拟内存地址，映射到物理内存地址，最直观的办法，就是来建一张映射表。这个映射表，能够实现虚拟内存里面的页，到物理内存里面的页的映射。这个映射表，在计算机里面，就叫作页表。</p>
+<p>页表地址转换，把一个内存地址分成<strong>页号(Directory)</strong> 和<strong>偏移量(Offset)</strong> 两个部分。以一个 32 位的内存地址，页的大小 4KB 为例，内存地址的 20 位的高位表示页号，12 位（212 = 4KB）的低位表示偏移量。</p>
+<p><strong>图2：页表结构</strong></p>
+<p><img src="https://img2018.cnblogs.com/blog/1075436/201908/1075436-20190820152825174-1408736427.png" alt="img"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" rel="tag">计算机系统</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
   id="post-进程与线程"
   class="article article-type-post"
   itemscope
@@ -165,7 +352,7 @@
   <time datetime="2021-05-31T06:07:45.000Z" itemprop="datePublished">2021-05-31</time>
 </a> 
   <div class="article-category">
-    <a class="article-category-link" href="/categories/c/">c++</a>
+    <a class="article-category-link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">计算机系统</a>
   </div>
    
     </div>
