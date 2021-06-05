@@ -173,7 +173,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      746 字
+      727 字
     </span>
   
 
@@ -229,12 +229,10 @@
 <li>高速缓存映射：内存地址是如何映射到 CPU Cache？</li>
 </ol>
 <p>程序在编译时不可能知道装载后的物理内存地址，实际上，程序编译生成的地址都是虚拟地址。在我们日常使用的 Linux 或者 Windows 操作系统下，程序并不能直接访问物理内存。为了解决这个问题，当程序装载后，会通过虚拟地址映射到真实的物理地址。</p>
-<p><strong>图1：虚拟地址和物理地址映射</strong></p>
 <p>内存被分成固定大小的<strong>页(Page)<strong>，然后再通过</strong>虚拟内存地址(Virtual Address)</strong> 到<strong>物理内存地址(Physical Address)</strong> 的**地址转换(Address Translation)**，才能访问实际存放数据的物理内存位置。而我们的程序看到的内存地址，都是虚拟内存地址。</p>
 <p>这些虚拟内存地址究竟是怎么转换成物理内存地址的呢？这一讲里，我们就来看一看。</p>
 <h2 id="2-简单页表"><a href="#2-简单页表" class="headerlink" title="2. 简单页表"></a>2. 简单页表</h2><p>**页表(Page Table)**：想要把虚拟内存地址，映射到物理内存地址，最直观的办法，就是来建一张映射表。这个映射表，能够实现虚拟内存里面的页，到物理内存里面的页的映射。这个映射表，在计算机里面，就叫作页表。</p>
 <p>页表地址转换，把一个内存地址分成<strong>页号(Directory)</strong> 和<strong>偏移量(Offset)</strong> 两个部分。以一个 32 位的内存地址，页的大小 4KB 为例，内存地址的 20 位的高位表示页号，12 位（212 = 4KB）的低位表示偏移量。</p>
-<p><strong>图2：页表结构</strong></p>
 
             </div>
             <hr>
