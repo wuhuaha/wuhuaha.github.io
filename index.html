@@ -141,6 +141,142 @@
     
     
     <article
+  id="post-gdb总结"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/06/15/gdb%E6%80%BB%E7%BB%93/"
+    >gdb总结</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/06/15/gdb%E6%80%BB%E7%BB%93/" class="article-date">
+  <time datetime="2021-06-15T03:47:38.000Z" itemprop="datePublished">2021-06-15</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/c/">c</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="gdb常用命令总结"><a href="#gdb常用命令总结" class="headerlink" title="gdb常用命令总结"></a>gdb常用命令总结</h1><h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>​    用gcc编译源程序的时候，编译后的可执行文件不会包含源程序代码，如果您打算编译后的程序可以被调试，编译的时候要加-g的参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -g -o test test.c</span><br></pre></td></tr></table></figure>
+<h2 id="基本调试命令"><a href="#基本调试命令" class="headerlink" title="基本调试命令"></a>基本调试命令</h2><table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>命令****缩写</strong></th>
+<th><strong>命令说明</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>set args</td>
+<td></td>
+<td>设置主程序的参数。例如：./book119 /oracle/c/book1.c /tmp/book1.c设置参数的方法是：gdb book119(gdb) set args /oracle/c/book1.c /tmp/book1.c</td>
+</tr>
+<tr>
+<td>break</td>
+<td>b</td>
+<td>设置断点，b 20 表示在第20行设置断点，可以设置多个断点。</td>
+</tr>
+<tr>
+<td>run</td>
+<td>r</td>
+<td>开始运行程序, 程序运行到断点的位置会停下来，如果没有遇到断点，程序一直运行下去。</td>
+</tr>
+<tr>
+<td>next</td>
+<td>n</td>
+<td>执行当前行语句，如果该语句为函数调用，不会进入函数内部执行。</td>
+</tr>
+<tr>
+<td>step</td>
+<td>s</td>
+<td>执行当前行语句，如果该语句为函数调用，则进入函数执行其中的第一条语句。注意了，如果函数是库函数或第三方提供的函数，用s也是进不去的，因为没有源代码，如果是您自定义的函数，只要有源码就可以进去。</td>
+</tr>
+<tr>
+<td>print</td>
+<td>p</td>
+<td>显示变量值，例如：p name表示显示变量name的值。</td>
+</tr>
+<tr>
+<td>continue</td>
+<td>c</td>
+<td>继续程序的运行，直到遇到下一个断点。</td>
+</tr>
+<tr>
+<td>set var name=value</td>
+<td></td>
+<td>设置变量的值，假设程序有两个变量：int ii; char name[21];set var ii=10 把ii的值设置为10；set var name=”西施” 把name的值设置为”西施”，注意，不是strcpy。</td>
+</tr>
+<tr>
+<td>quit</td>
+<td>q</td>
+<td>退出gdb环境。</td>
+</tr>
+<tr>
+<td></td>
+<td>bt</td>
+<td>查看调用栈</td>
+</tr>
+</tbody></table>
+<h2 id="多进程调试"><a href="#多进程调试" class="headerlink" title="多进程调试"></a>多进程调试</h2><ul>
+<li>调试父进程： set follow-fork-mode parent (缺省)</li>
+<li>调试子进程： set follow-fork-mode child</li>
+<li>设置调试模式： set detach-on-fork[on/off],<br>  缺省为on,表示调试当前进程的时候，其他的进程继续运行，如果用off,调试当前进程的时候，其他的进程被gdb挂起</li>
+<li>查看可调试的进程： info inferiors</li>
+<li>切换当前调试的进程:  inferior 进程id</li>
+<li>辅助ps命令复习：<ul>
+<li>查看当前运行的进程： ps aux</li>
+<li>查看当前运行的轻量级进程（线程）： ps  -aL</li>
+<li>查看主线程和新线程的关系： pstree -p 主线程id</li>
+</ul>
+</li>
+</ul>
+<h2 id="多线程调试"><a href="#多线程调试" class="headerlink" title="多线程调试"></a>多线程调试</h2><ul>
+<li>查看线程： info threads</li>
+<li>切换线程： thread 线程id</li>
+<li>只运行当前线程： set scheduler-locking on</li>
+<li>运行全部线程：     set scheduler-locking off</li>
+<li>指定某线程执行gdb命令 ： thread apply 线程id cmd</li>
+<li>全部的线程执行gdb命令：   thread apply all cmd</li>
+</ul>
+<h2 id="附注"><a href="#附注" class="headerlink" title="附注"></a>附注</h2><p>​    设置断点或者单步跟踪回干扰多进程多线程之间的竞争状态，可能看到的是假象。例如在某一个线程设置断点而其他线程依然在跑，并发场景就被破坏掉了。这种情况gdb难以解决，可以使用加日志等方法。</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gdb/" rel="tag">gdb</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
   id="post-共享内存"
   class="article article-type-post"
   itemscope
